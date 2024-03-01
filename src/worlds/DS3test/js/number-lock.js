@@ -22,10 +22,10 @@ AFRAME.registerComponent('number-lock', {
 
         for (let i = 0; i < CONTEXT_AF.data.nums; i++) {
             let numSlot = document.createElement('a-entity');
-            numSlot.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#note_c'});
+            numSlot.setAttribute('circles-interactive-object', {type:'highlight'});
             numSlot.setAttribute('position',{x:(slotWidth * i) + (slotWidth/2) - (objWidth/2),y:0,z:objDepth / 2});
             numSlot.setAttribute('geometry', {primitive:'box', width:slotWidth * (4/5), height:objHeight * (4/5), depth:objHeight * (4/5)});
-            numSlot.setAttribute('animation__lock', {property:'rotation', to:(360/9) +' 0 0', dur:500, startEvents:'click'});
+            numSlot.setAttribute('animation__lock', {property:'rotation', to:(360/10) +' 0 0', dur:500, startEvents:'click'});
 
             numSlot.addEventListener('animationcomplete__lock', CheckCode);
 
@@ -33,11 +33,11 @@ AFRAME.registerComponent('number-lock', {
 
             CONTEXT_AF.el.appendChild(numSlot);
 
-            CONTEXT_AF.combination = CONTEXT_AF.combination + "1";
+            CONTEXT_AF.combination = CONTEXT_AF.combination + "0";
         }
 
         function CheckCode() {
-            let toRot = this.getAttribute('rotation').x + (360/9);
+            let toRot = this.getAttribute('rotation').x + (360/10);
             this.setAttribute('animation__lock', {to: toRot + ' 0 0'});
 
             let newCode = "";
@@ -51,6 +51,7 @@ AFRAME.registerComponent('number-lock', {
                 }
             }
             CONTEXT_AF.combination = newCode;
+            console.log(newCode);
 
             if (parseInt(CONTEXT_AF.combination) === CONTEXT_AF.data.code) {
                 console.log("Unlocked");
