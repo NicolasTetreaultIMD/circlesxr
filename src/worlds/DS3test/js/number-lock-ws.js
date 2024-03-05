@@ -80,7 +80,7 @@ AFRAME.registerComponent('number-lock-ws', {
                 CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {rotatedSlot:this.getAttribute('id'), room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             }
 
-            //listen for when others turn on campfire
+            //listen for when others makes changes to the numberlock
             CONTEXT_AF.socket.on(CONTEXT_AF.EventName, function(data) {
                 CONTEXT_AF.turnNumSlot(data.rotatedSlot);
             });
