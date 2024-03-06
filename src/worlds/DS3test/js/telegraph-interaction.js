@@ -1,15 +1,18 @@
+//Enum for the different types of morse input
 const MorseInput = {
     dot: 0,
     dash: 1,
     space: 2
 }
 
+//Delay used after playing the morse input
 const MorseDelay = {
     dot: 0.3,
     dash: 0.5,
     space: 1
 }
 
+//Manages the telegraph interactions
 AFRAME.registerComponent('telegraph-interaction', {
     schema: {
     },
@@ -129,16 +132,20 @@ AFRAME.registerComponent('telegraph-interaction', {
 
         CONTEXT_AF.el.appendChild(telegraphElements);
 
+        //Add the given morse input to the message string
         function inputMorse(inputType) {
 
+            //Current message string before adding anything
             let textField = CONTEXT_AF.textField.getAttribute('circles-label').text;
 
+            //If the text field is hidden then start the string over and make the field visible
             if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == false) {
                 CONTEXT_AF.textField.setAttribute('circles-interactive-visible', true);
 
                 textField = '';
             }
 
+            //Switch to decide which symbol to add based on the input type
             switch(inputType) {
                 case MorseInput.dot:
                     textField += '.';
@@ -147,6 +154,7 @@ AFRAME.registerComponent('telegraph-interaction', {
                     textField += '-';
                     break;
                 case MorseInput.space:
+                    //A space input will only be accepted if not the first character (avoid having a lot of nothing before the first beep)
                     if (textField != '') {
                         textField += '/';
                     }
@@ -156,9 +164,12 @@ AFRAME.registerComponent('telegraph-interaction', {
                     break;
             }
 
+            //Set the text field with the message with the new character
             CONTEXT_AF.textField.setAttribute('circles-label', {text: textField});
         }
 
+        //Hides the text field to reste the morse code
+        //No need to actualy reset the string since it will be reset in the next inputMorse()
         function ResetMessage() {
             if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == true) {
                 CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
@@ -180,32 +191,46 @@ AFRAME.registerComponent('telegraph-interaction', {
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
+            //Add events listeners for the input type sending event
             dotBtn.addEventListener('click', function(){SendMorse(MorseInput.dot)});
             dashBtn.addEventListener('click', function(){SendMorse(MorseInput.dash)});
             spaceBtn.addEventListener('click', function(){SendMorse(MorseInput.space)});
 
+            //Inputs the morse symbol and emits an event to others in the room so they can see the new symbol added
             function SendMorse(inputType) {
                 inputMorse(inputType);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseInput:inputType, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             }
 
+            //Add events listeners for the reset of the text field
             sendBtn.addEventListener('click', SendReset);
             resetBtn.addEventListener('click', SendReset);
 
+            //Emits an event to others in the room so everyone has their text field reset
             function SendReset() {
                 CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {resetRequest:true, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             }
 
+            //Add an event listeners to send the morse message
             sendBtn.addEventListener('click', SendMessage);
 
+            //If the message is not null
+            //Start playing the message
+            //Sends the message to other users in the same world
+            //Sends the message to other users in the specified other world
             function SendMessage() {
+                //If the text field is not null
                 if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == true) {
+                    //Reset text field
                     CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
     
+                    //Save the message in the text field
                     let message = CONTEXT_AF.textField.getAttribute('circles-label').text;
                     //console.log(message);
+                    //Emit the message to other users in the same world
                     CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
 
+                    //Emit the message to users in the specified other world
                     if (CIRCLES.getCirclesWorldName() === CONTEXT_AF.World1Name) {
                         CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World2Name});
                     }
@@ -213,6 +238,7 @@ AFRAME.registerComponent('telegraph-interaction', {
                         CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World1Name});
                     }
     
+                    //Start playing the message
                     CONTEXT_AF.StartMessagePlayback(message);
                 }
             }
@@ -220,12 +246,15 @@ AFRAME.registerComponent('telegraph-interaction', {
             //listen for when others sends a morse message
             CONTEXT_AF.socket.on(CONTEXT_AF.EventName, function(data) {
 
+                //If the event emited is meant for current world
                 if (data.world === CIRCLES.getCirclesWorldName()) {
 
+                    //If the data has the morse input
                     if (data.morseInput != null) {
     
                         inputMorse(data.morseInput);
         
+                        //Play a sound effect based on the morse input
                         switch(data.morseInput) {
                             case MorseInput.dot:
                                 CONTEXT_AF.dot_sfx.components.sound.playSound();
@@ -236,10 +265,12 @@ AFRAME.registerComponent('telegraph-interaction', {
                         }
                     }
     
+                    //If the data has the reset request
                     if (data.resetRequest == true) {
                         ResetMessage();
                     }
     
+                    //If the data has the full message
                     if (data.morseMessage != null) {
                         CONTEXT_AF.StartMessagePlayback(data.morseMessage);
                     }
@@ -286,15 +317,21 @@ AFRAME.registerComponent('telegraph-interaction', {
     },
     update() {},
 
+    //Used to play the morse message
     tick: function (time, timeDelta) {
         const CONTEXT_AF = this;
 
+        //If there is a message to play
         if (CONTEXT_AF.playbackMessg != "") {
+            //Add the time that has elapsed since the last tick
             CONTEXT_AF.timeElapsed += timeDelta / 1000;
 
+            //If enough time has elapsed since the last symbol was played
             if (CONTEXT_AF.timeElapsed > CONTEXT_AF.delay) {
                 CONTEXT_AF.timeElapsed = 0;
 
+                //Sets the delay and plays the sound based on the next symbol to play
+                //For the "." and "-" the light will also turn on. The light will turn off with sound-ended event listener
                 switch(CONTEXT_AF.playbackMessg[0]) {
                     case '.':
                         CONTEXT_AF.dot_sfx.components.sound.playSound();
@@ -314,8 +351,10 @@ AFRAME.registerComponent('telegraph-interaction', {
                         break;
                 }
 
+                //Removes the first character of the string
                 CONTEXT_AF.playbackMessg = CONTEXT_AF.playbackMessg.slice(1);
 
+                //If the full message was played return the telegraph functionality
                 if (CONTEXT_AF.playbackMessg == "") {
                     CONTEXT_AF.telegraphElements.setAttribute('circles-interactive-visible', 'true');
                 }
@@ -323,25 +362,31 @@ AFRAME.registerComponent('telegraph-interaction', {
         }
     },
 
+    //Starts playing the message
     StartMessagePlayback: function(message) {
         const CONTEXT_AF = this;
 
+        //Save the message to start playing it
         CONTEXT_AF.playbackMessg = message;
 
-        switch(message[0]) {
-            case '.':
-                CONTEXT_AF.delay = MorseDelay.dot;
-                //console.log('dot');
-                break;
-            case '-':
-                CONTEXT_AF.delay = MorseDelay.dash;
-                //console.log('dash');
-                break;
-        }
+        CONTEXT_AF.delay = MorseDelay.space;
 
+        // switch(message[0]) {
+        //     case '.':
+        //         CONTEXT_AF.delay = MorseDelay.dot;
+        //         //console.log('dot');
+        //         break;
+        //     case '-':
+        //         CONTEXT_AF.delay = MorseDelay.dash;
+        //         //console.log('dash');
+        //         break;
+        // }
+
+        //disables the telegraph UI elements while playing the message
         CONTEXT_AF.telegraphElements.setAttribute('circles-interactive-visible', 'false');
     },
 
+    //Turn On and Off the light
     ToggleLight: function(state) {
         const CONTEXT_AF = this;
         if (state == true) {
