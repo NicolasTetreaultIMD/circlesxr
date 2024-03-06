@@ -23,22 +23,35 @@ AFRAME.registerComponent('telegraph-interaction', {
         
         //Creates the telegraph components
         
-        let UIcontainer = document.createElement('a-entity');
-        UIcontainer.setAttribute('id', 'UIcontainerMorse');
-        UIcontainer.setAttribute('circles-interactive-visible', 'true');
+        //Light element
+        CONTEXT_AF.morseLight = document.createElement('a-entity');
+        CONTEXT_AF.morseLight.setAttribute('id', 'morseLight');
+        CONTEXT_AF.morseLight.setAttribute('position', {x:0,y:0.58,z:0});
+        CONTEXT_AF.morseLight.setAttribute('geometry', {primitive:'cylinder', height:0.2, radius:0.1});
+        CONTEXT_AF.morseLight.setAttribute('material', {color:'#316934', emissive:'#00ff00', emissiveIntensity:0});
+
+        CONTEXT_AF.el.appendChild(CONTEXT_AF.morseLight);
+
+        //Container for the other elements that need to be toggle off
+
+        let telegraphElements = document.createElement('a-entity');
+        telegraphElements.setAttribute('id', 'telegraphElements');
+        telegraphElements.setAttribute('circles-interactive-visible', 'true');
         
-        CONTEXT_AF.UIcontainer = UIcontainer;
+        CONTEXT_AF.telegraphElements = telegraphElements;
 
         //Sound elements
         CONTEXT_AF.dot_sfx = document.createElement('a-entity');
         CONTEXT_AF.dot_sfx.setAttribute('sound', {src:'#dot_sfx'});
+        CONTEXT_AF.dot_sfx.addEventListener('sound-ended', function() {CONTEXT_AF.ToggleLight(false)});
 
         CONTEXT_AF.dash_sfx = document.createElement('a-entity');
         CONTEXT_AF.dash_sfx.setAttribute('sound', {src:'#dash_sfx'});
+        CONTEXT_AF.dash_sfx.addEventListener('sound-ended', function() {CONTEXT_AF.ToggleLight(false)});
 
-        UIcontainer.appendChild(CONTEXT_AF.dot_sfx);
-        UIcontainer.appendChild(CONTEXT_AF.dash_sfx);
-        
+        telegraphElements.appendChild(CONTEXT_AF.dot_sfx);
+        telegraphElements.appendChild(CONTEXT_AF.dash_sfx);
+
         //Morse Display
         //Is there a way to change the size of the text?
         let morseDisplay = document.createElement('a-entity');
@@ -46,7 +59,7 @@ AFRAME.registerComponent('telegraph-interaction', {
         morseDisplay.setAttribute('circles-label', {text:'', arrow_visible:false, offset:'0 1 0'});
         morseDisplay.setAttribute('circles-interactive-visible', 'false');
         
-        UIcontainer.appendChild(morseDisplay);
+        telegraphElements.appendChild(morseDisplay);
         CONTEXT_AF.textField = morseDisplay;
 
         //Send/Clear Buttons
@@ -64,7 +77,6 @@ AFRAME.registerComponent('telegraph-interaction', {
         sendBtn.setAttribute('text', {width:2,value:'Send',align:'center',color:'black'});
         sendBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95});
         sendBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
-        sendBtn.addEventListener('click', SendMessage);
 
         let resetBtn = document.createElement('a-entity');
         resetBtn.setAttribute('id', 'resetBtn');
@@ -78,7 +90,7 @@ AFRAME.registerComponent('telegraph-interaction', {
 
         comsBtnGrp.appendChild(sendBtn);
         comsBtnGrp.appendChild(resetBtn);
-        UIcontainer.appendChild(comsBtnGrp);
+        telegraphElements.appendChild(comsBtnGrp);
 
         //Input Buttons
 
@@ -94,7 +106,6 @@ AFRAME.registerComponent('telegraph-interaction', {
         dotBtn.setAttribute('position', {x:-0.3,y:0,z:0});
         dotBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95, click_sound:'#dot_sfx'});
         dotBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
-        dotBtn.addEventListener('click', function(){inputMorse(MorseInput.dot)});
 
         let dashBtn = document.createElement('a-entity');
         dashBtn.setAttribute('id', 'dashInputBtn');
@@ -102,7 +113,6 @@ AFRAME.registerComponent('telegraph-interaction', {
         dashBtn.setAttribute('material', {src:'#dashbtn_texture', transparent:true});
         dashBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95, click_sound:'#dash_sfx'});
         dashBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
-        dashBtn.addEventListener('click', function(){inputMorse(MorseInput.dash)});
 
         let spaceBtn = document.createElement('a-entity');
         spaceBtn.setAttribute('id', 'spaceInputBtn');
@@ -111,14 +121,13 @@ AFRAME.registerComponent('telegraph-interaction', {
         spaceBtn.setAttribute('position', {x:0.3,y:0,z:0});
         spaceBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95});
         spaceBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
-        spaceBtn.addEventListener('click', function(){inputMorse(MorseInput.space)});
 
         inputBtnGrp.appendChild(dotBtn);
         inputBtnGrp.appendChild(dashBtn);
         inputBtnGrp.appendChild(spaceBtn);
-        UIcontainer.appendChild(inputBtnGrp);
+        telegraphElements.appendChild(inputBtnGrp);
 
-        CONTEXT_AF.el.appendChild(UIcontainer);
+        CONTEXT_AF.el.appendChild(telegraphElements);
 
         function inputMorse(inputType) {
 
@@ -154,18 +163,7 @@ AFRAME.registerComponent('telegraph-interaction', {
             if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == true) {
                 CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
 
-                console.log("MessageReset");
-            }
-        }
-
-        function SendMessage() {
-            if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == true) {
-                CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
-
-                let message = CONTEXT_AF.textField.getAttribute('circles-label').text;
-                console.log(message);
-
-                CONTEXT_AF.StartMessagePlayback(message);
+                //console.log("MessageReset");
             }
         }
 
@@ -174,47 +172,104 @@ AFRAME.registerComponent('telegraph-interaction', {
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.EventName = "telegraph_event";
 
+        CONTEXT_AF.World1Name = "DS3test";
+        CONTEXT_AF.World2Name = "TelegraphTest";
+
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-            //event listener to send changes
-            // CONTEXT_AF.numSlots.forEach(numSlot => {
-            //     numSlot.addEventListener('click', emitSlotChange);
-            // });
+            dotBtn.addEventListener('click', function(){SendMorse(MorseInput.dot)});
+            dashBtn.addEventListener('click', function(){SendMorse(MorseInput.dash)});
+            spaceBtn.addEventListener('click', function(){SendMorse(MorseInput.space)});
 
-            //Changes that will be sent using sockets
-            function emitSlotChange() {
-                //CONTEXT_AF.turnNumSlot(this.getAttribute('id'));
-                CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {rotatedSlot:"REPLACE", room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+            function SendMorse(inputType) {
+                inputMorse(inputType);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseInput:inputType, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+            }
+
+            sendBtn.addEventListener('click', SendReset);
+            resetBtn.addEventListener('click', SendReset);
+
+            function SendReset() {
+                CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {resetRequest:true, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+            }
+
+            sendBtn.addEventListener('click', SendMessage);
+
+            function SendMessage() {
+                if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == true) {
+                    CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
+    
+                    let message = CONTEXT_AF.textField.getAttribute('circles-label').text;
+                    //console.log(message);
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+
+                    if (CIRCLES.getCirclesWorldName() === CONTEXT_AF.World1Name) {
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World2Name});
+                    }
+                    else {
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World1Name});
+                    }
+    
+                    CONTEXT_AF.StartMessagePlayback(message);
+                }
             }
 
             //listen for when others sends a morse message
             CONTEXT_AF.socket.on(CONTEXT_AF.EventName, function(data) {
-                //CONTEXT_AF.turnNumSlot(data.rotatedSlot);
+
+                if (data.world === CIRCLES.getCirclesWorldName()) {
+
+                    if (data.morseInput != null) {
+    
+                        inputMorse(data.morseInput);
+        
+                        switch(data.morseInput) {
+                            case MorseInput.dot:
+                                CONTEXT_AF.dot_sfx.components.sound.playSound();
+                                break;
+                            case MorseInput.dash:
+                                CONTEXT_AF.dash_sfx.components.sound.playSound();
+                                break;
+                        }
+                    }
+    
+                    if (data.resetRequest == true) {
+                        ResetMessage();
+                    }
+    
+                    if (data.morseMessage != null) {
+                        CONTEXT_AF.StartMessagePlayback(data.morseMessage);
+                    }
+                }
             });
 
-            // //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
-            // setTimeout(function() {
-            //     CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-            // }, THREE.MathUtils.randInt(0,1200));
+            //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
+            setTimeout(function() {
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+            }, THREE.MathUtils.randInt(0,1200));
 
-            // //if someone else requests our sync data, we send it.
-            // CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-            //     //if the same world as the one requesting
-            //     if (data.world === CIRCLES.getCirclesWorldName()) {
-            //         CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {numberSlotState:"REPLACE", room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-            //     }
-            // });
+            //if someone else requests our sync data, we send it.
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+                //if the same world as the one requesting
+                if (data.world === CIRCLES.getCirclesWorldName()) {
+                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {curMorseMessage:CONTEXT_AF.textField.getAttribute('circles-label').text, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                }
+            });
 
-            // //receiving sync data from others (assuming all others is the same for now)
-            // CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
-            //     //make sure we are receiving data for this world
-            //     if (data.world === CIRCLES.getCirclesWorldName()) {
-            //         CONTEXT_AF.setNumSlot(data.numberSlotState );
-            //     }
-            // });
+            //receiving sync data from others (assuming all others is the same for now)
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
+                //make sure we are receiving data for this world
+                if (data.world === CIRCLES.getCirclesWorldName() && data.curMorseMessage != null) {
+                    CONTEXT_AF.textField.setAttribute('circles-label', {text: data.curMorseMessage});
+                    
+                    if (data.curMorseMessage != "" && data.curMorseMessage != "label_text") {
+                        CONTEXT_AF.textField.setAttribute('circles-interactive-visible', true);
+                    } 
+                }
+            });
         };
 
         //check if circle networking is ready. If not, add an eent to listen for when it is ...
@@ -244,11 +299,13 @@ AFRAME.registerComponent('telegraph-interaction', {
                     case '.':
                         CONTEXT_AF.dot_sfx.components.sound.playSound();
                         CONTEXT_AF.delay = MorseDelay.dot;
+                        CONTEXT_AF.ToggleLight(true);
                         //console.log('dot');
                         break;
                     case '-':
                         CONTEXT_AF.dash_sfx.components.sound.playSound();
                         CONTEXT_AF.delay = MorseDelay.dash;
+                        CONTEXT_AF.ToggleLight(true);
                         //console.log('dash');
                         break;
                     case '/':
@@ -260,7 +317,7 @@ AFRAME.registerComponent('telegraph-interaction', {
                 CONTEXT_AF.playbackMessg = CONTEXT_AF.playbackMessg.slice(1);
 
                 if (CONTEXT_AF.playbackMessg == "") {
-                    CONTEXT_AF.UIcontainer.setAttribute('circles-interactive-visible', 'true');
+                    CONTEXT_AF.telegraphElements.setAttribute('circles-interactive-visible', 'true');
                 }
             }
         }
@@ -274,15 +331,25 @@ AFRAME.registerComponent('telegraph-interaction', {
         switch(message[0]) {
             case '.':
                 CONTEXT_AF.delay = MorseDelay.dot;
-                console.log('dot');
+                //console.log('dot');
                 break;
             case '-':
                 CONTEXT_AF.delay = MorseDelay.dash;
-                console.log('dash');
+                //console.log('dash');
                 break;
         }
 
-        CONTEXT_AF.UIcontainer.setAttribute('circles-interactive-visible', 'false');
+        CONTEXT_AF.telegraphElements.setAttribute('circles-interactive-visible', 'false');
+    },
+
+    ToggleLight: function(state) {
+        const CONTEXT_AF = this;
+        if (state == true) {
+            CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:1});
+        }
+        else if (state == false) {
+            CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:0});
+        }
     },
     
 });
