@@ -16,6 +16,8 @@ AFRAME.registerComponent('number-lock-ws', {
         CONTEXT_AF.objDepth = CONTEXT_AF.objScale.split(';')[2].split(':')[1];
         CONTEXT_AF.slotWidth = CONTEXT_AF.objWidth / CONTEXT_AF.data.nums;
 
+
+        //Create all the slots for the number lock
         for (let i = 0; i < CONTEXT_AF.data.nums; i++) {
             let numSlot = document.createElement('a-entity');
 
@@ -41,6 +43,7 @@ AFRAME.registerComponent('number-lock-ws', {
             CONTEXT_AF.combination = CONTEXT_AF.combination + "0";
         }
 
+        //Rotate the clicked slot and update the code of the lock
         function UpdateNumSlot() {
             let toRot = this.getAttribute('rotation').x + (360/10);
             this.setAttribute('animation__lock', {to: toRot + ' 0 0'});
@@ -120,6 +123,8 @@ AFRAME.registerComponent('number-lock-ws', {
         }
     },
     update() {},
+
+    //Rotates the number slot that was received via event by another user
     turnNumSlot : function (numSlotID) {
         const CONTEXT_AF = this;
 
@@ -130,6 +135,7 @@ AFRAME.registerComponent('number-lock-ws', {
             }
         }
     },
+    //Position the number lock to match the current state of the lock in the world
     setNumSlot : function (state) {
         const CONTEXT_AF = this;
         CONTEXT_AF.combination = state;
@@ -140,6 +146,7 @@ AFRAME.registerComponent('number-lock-ws', {
             CONTEXT_AF.CheckCode();
         }
     },
+    //Check if the current code matches the solution to the lock
     CheckCode : function () {
         const CONTEXT_AF = this;
         if (parseInt(CONTEXT_AF.combination) === CONTEXT_AF.data.code) {
