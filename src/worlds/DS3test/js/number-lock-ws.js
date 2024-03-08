@@ -2,6 +2,9 @@ AFRAME.registerComponent('number-lock-ws', {
     schema: {
         nums: {type:'int', default:4},
         code: {type:'int', default:1234},
+        stringCode: {type:'string', default:""},
+        mode: {type:'string', default:'num'},
+        textSize: {type:'int', default:3.5},
     },
     init() {
         const CONTEXT_AF = this;
@@ -27,7 +30,9 @@ AFRAME.registerComponent('number-lock-ws', {
             numSlot.setAttribute('circles-interactive-object', {type:'highlight'});
             numSlot.setAttribute('class', 'interactive');
             numSlot.setAttribute('position',{x:(CONTEXT_AF.slotWidth * i) + (CONTEXT_AF.slotWidth/2) - (CONTEXT_AF.objWidth/2),y:0,z:CONTEXT_AF.objDepth / 2});
-            numSlot.setAttribute('geometry', {primitive:'box', width:CONTEXT_AF.slotWidth * (4/5), height:CONTEXT_AF.objHeight * (4/5), depth:CONTEXT_AF.objHeight * (4/5)});
+            //numSlot.setAttribute('geometry', {primitive:'box', width:CONTEXT_AF.slotWidth * (4/5), height:CONTEXT_AF.objHeight * (4/5), depth:CONTEXT_AF.objHeight * (4/5)});
+            //gltf-model="#navmesh_gltf"
+            numSlot.setAttribute('gltf-model', '#numlock_model');
             numSlot.setAttribute('animation__lock', {property:'rotation', to:(360/10) +' 0 0', dur:500, startEvents:'rotate-slot'});
 
             numSlot.addEventListener('animationcomplete__lock', UpdateNumSlot);
@@ -37,10 +42,78 @@ AFRAME.registerComponent('number-lock-ws', {
                 numSlot.emit('rotate-slot');
             });
 
+            //add the text to the slot
+
+            let slotChars = []
+
+            if (CONTEXT_AF.data.mode === "num" ) {
+                console.log("Num mode");
+
+                slotChars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+                // for (let j = 0; j < 10; j++) {
+                //     let textContainer = document.createElement('a-entity');
+                //     textContainer.setAttribute('rotation', {x:-(360/10) * j, y:0,z:0});
+
+                //     let text = document.createElement('a-entity');
+                //     text.setAttribute('geometry', {primitive:'plane', height:CONTEXT_AF.slotWidth * (4/5), width:CONTEXT_AF.slotWidth * (4/5)});
+                //     text.setAttribute('material', {opacity:0});
+                //     text.setAttribute('position', {x:0,y:0,z:((CONTEXT_AF.slotWidth * (4/5)) / 2) + 0.5});
+                //     text.setAttribute('text', {width:CONTEXT_AF.data.textSize,value:parseInt(j),align:'center',color:'black'});
+
+                //     textContainer.appendChild(text);
+                //     numSlot.appendChild(textContainer);
+                // }
+            }
+            else if (CONTEXT_AF.data.mode === "char") {
+                console.log("character mode");
+
+                slotChars = getSlotChars(CONTEXT_AF.data.stringCode.charAt(i), CONTEXT_AF.data.code.toString().charAt(i));
+            }
+
+            for (let j = 0; j < 10; j++) {
+                let textContainer = document.createElement('a-entity');
+                textContainer.setAttribute('rotation', {x:-(360/10) * j, y:0,z:0});
+
+                let text = document.createElement('a-entity');
+                text.setAttribute('position', {x:0,y:0,z:((CONTEXT_AF.slotWidth * (4/5)) / 2) - 0.1});
+                text.setAttribute('text', {width:CONTEXT_AF.data.textSize,value:slotChars[j],align:'center',color:'black'});
+
+                textContainer.appendChild(text);
+                numSlot.appendChild(textContainer);
+            }
 
             CONTEXT_AF.el.appendChild(numSlot);
 
             CONTEXT_AF.combination = CONTEXT_AF.combination + "0";
+        }
+
+        function getSlotChars(includeChar, codePos) {
+            console.log(includeChar);
+            console.log(codePos);
+            let possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            includeChar = includeChar.toUpperCase();
+            let slotString = [];
+
+            for (let i = 0; i < possibleCharacters.length; i++) {
+                if (possibleCharacters.charAt(i) === includeChar) {
+                    for (let j = 0; j < 10; j++) {
+                        let charIndex = (i - codePos) + j;
+
+                        if (charIndex < 0) {
+                            charIndex += possibleCharacters.length;
+                        }
+                        else if (charIndex >= possibleCharacters.length) {
+                            charIndex -= possibleCharacters.length;
+                        }
+
+                        slotString.push(possibleCharacters.charAt(charIndex));
+                    }
+                }
+            }
+
+            console.log(slotString);
+            return slotString;
         }
 
         //Rotate the clicked slot and update the code of the lock
