@@ -71,8 +71,8 @@
 
       <a-entity id="testTelegraph" material="color:brown" telegraph-interaction geometry="primitive:box;width:1;height:1;depth:1;" position="0 1 -2"></a-entity>
 
-      <!-- <a-entity id="testWebS" number-lock-ws="mode:char;stringCode:AZAZ;" geometry="primitive:box;width:5;height:1;depth:1;" position="0 0 -2"></a-entity> -->
-      <a-entity id="testWebS" number-lock-ws geometry="primitive:box;width:5;height:1;depth:1;" position="0 0 -2"></a-entity>
+      <a-entity id="testCharLock" number-lock-ws="mode:char;stringCode:JEFF;eventName:charlock-emit" geometry="primitive:box;width:5;height:1;depth:1;" position="0 0 2" rotation="0 180 0"></a-entity>
+      <a-entity id="testNumLock" number-lock-ws geometry="primitive:box;width:5;height:1;depth:1;" position="0 0 -2"></a-entity>
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
@@ -90,4 +90,8 @@
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
+  <script>
+    document.addEventListener("numlock-emit", function() { console.log("CODE COMPLETED");});
+    document.addEventListener("charlock-emit", function() { console.log("CHAR CODE COMPLETED");});
+  </script>
 </html>

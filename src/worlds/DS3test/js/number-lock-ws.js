@@ -5,6 +5,7 @@ AFRAME.registerComponent('number-lock-ws', {
         stringCode: {type:'string', default:""},
         mode: {type:'string', default:'num'},
         textSize: {type:'int', default:3.5},
+        eventName: {type:'string', default:'numlock-emit'}
     },
     init() {
         const CONTEXT_AF = this;
@@ -50,20 +51,6 @@ AFRAME.registerComponent('number-lock-ws', {
                 console.log("Num mode");
 
                 slotChars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-                // for (let j = 0; j < 10; j++) {
-                //     let textContainer = document.createElement('a-entity');
-                //     textContainer.setAttribute('rotation', {x:-(360/10) * j, y:0,z:0});
-
-                //     let text = document.createElement('a-entity');
-                //     text.setAttribute('geometry', {primitive:'plane', height:CONTEXT_AF.slotWidth * (4/5), width:CONTEXT_AF.slotWidth * (4/5)});
-                //     text.setAttribute('material', {opacity:0});
-                //     text.setAttribute('position', {x:0,y:0,z:((CONTEXT_AF.slotWidth * (4/5)) / 2) + 0.5});
-                //     text.setAttribute('text', {width:CONTEXT_AF.data.textSize,value:parseInt(j),align:'center',color:'black'});
-
-                //     textContainer.appendChild(text);
-                //     numSlot.appendChild(textContainer);
-                // }
             }
             else if (CONTEXT_AF.data.mode === "char") {
                 console.log("character mode");
@@ -223,7 +210,11 @@ AFRAME.registerComponent('number-lock-ws', {
     CheckCode : function () {
         const CONTEXT_AF = this;
         if (parseInt(CONTEXT_AF.combination) === CONTEXT_AF.data.code) {
-            console.log("Unlocked");
+
+            const lockEvent = new CustomEvent(CONTEXT_AF.data.eventName);
+
+            document.dispatchEvent(lockEvent);
+
             CONTEXT_AF.numSlots.forEach(numSlot => {
                 numSlot.setAttribute('circles-interactive-object', {enabled: false});
             });
