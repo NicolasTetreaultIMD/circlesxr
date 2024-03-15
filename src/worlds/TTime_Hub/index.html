@@ -11,7 +11,7 @@
   <a-scene circles_scene_properties>
     <a-assets>
 
-      <a-asset-item id="IngeniumLab-gltf" src="assets/Ingenium_Lab_Room.glb"></a-asset-item>
+      <a-asset-item id="IngeniumLab-gltf" src="assets/Ingenium_Lab.glb"></a-asset-item>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
@@ -21,7 +21,8 @@
 
     <a-entity id = "lab" gltf-model="#IngeniumLab-gltf" id="lab" position="0 0 0" scale="1 1 1" rotation="0 0 0">
 
-    <a-entity light="type: ambient; color: #FFF; intensity:2;"></a-entity>
+    <a-entity light="type: ambient; color: #FFF; intensity:10;"></a-entity>
+    <a-entity light="type: spot; color: #FFF; intensity:10;"></a-entity>
 
     <a-entity id="TimeTraveler-Group"
                 position="-4.31 1.18 -0.222" rotation="0 0 0"
