@@ -96,6 +96,7 @@ AFRAME.registerComponent('campfire-interactive', {
                 if (data.world === CIRCLES.getCirclesWorldName()) {
                     CONTEXT_AF.turnFire(data.campfireON );
                     CONTEXT_AF.fireOn = data.campfireON;
+                    console.log("!");
                 }
             });
         };
@@ -116,6 +117,7 @@ AFRAME.registerComponent('campfire-interactive', {
     turnFire : function (turnOn) {
         const CONTEXT_AF = this;
         const scene      = document.querySelector('a-scene');
+        console.log("?o?");
 
         if (turnOn) {
             CONTEXT_AF.fireSound.components.sound.playSound();
