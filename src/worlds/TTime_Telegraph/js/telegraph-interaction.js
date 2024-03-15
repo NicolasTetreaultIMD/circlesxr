@@ -183,8 +183,8 @@ AFRAME.registerComponent('telegraph-interaction', {
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.EventName = "telegraph_event";
 
-        CONTEXT_AF.World1Name = "DS3test";
-        CONTEXT_AF.World2Name = "TelegraphTest";
+        CONTEXT_AF.World1Name = "TTime_MissionControl";
+        CONTEXT_AF.World2Name = "TTime_Telegraph";
 
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
