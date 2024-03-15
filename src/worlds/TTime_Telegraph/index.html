@@ -11,9 +11,13 @@
   <a-scene circles_scene_properties>
     <a-assets>
 
+      <a-asset-item id="IngeniumTelegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
+
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
+
+    <a-entity id = "telegraph" gltf-model="#IngeniumTelegraph-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
 
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
