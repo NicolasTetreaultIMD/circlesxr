@@ -8,8 +8,8 @@
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
     <script src="js/lights-interaction.js"></script>
-    <script src="js/NumberLock.js"></script>
     <script src="js/number-lock-ws.js"></script>
+    <script src="js/telegraph-interaction.js"></script>
   </head>
   <body>
 
@@ -23,6 +23,10 @@
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
 
+        <img id="dotbtn_texture" src="assets/textures/dotBtn.png" crossorigin="anonymous">
+        <img id="dashbtn_texture" src="assets/textures/dashBtn.png" crossorigin="anonymous">
+        <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
+
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
         <audio id="magic_music" src="assets/sounds/Magic_Music.mp3" preload="auto" crossorigin="anonymous"></audio>
 
@@ -30,6 +34,10 @@
         <audio id="note_d" src="assets/sounds/Note_D.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="note_e" src="assets/sounds/Note_E.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="note_f" src="assets/sounds/Note_F.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+        <!-- cretit: "SOS-MorseCode" Pixabay - https://pixabay.com/sound-effects/sos-morsecode-31731/-->
+        <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
 
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
@@ -41,6 +49,7 @@
         <a-asset-item id="island_2_gltf"      src="assets/models/island_2/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="island_3_gltf"      src="assets/models/island_3/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
+        <a-asset-item id="numlock_model" src="assets/models/LockDial.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="chairTest" src="assets/models/victorian_chairs.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <!-- <a-asset-item id="island_leaves_gltf" src="assets/models/island_leaves/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
 
@@ -60,7 +69,10 @@
       <!--<a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
       <!-- <a-entity id="testNumberLock" number-lock="nums: 4; code:1234"  geometry="primitive:box;width:5;height:1;depth:1;"></a-entity> -->
 
-      <a-entity id="testWebS" number-lock-ws geometry="primitive:box;width:5;height:1;depth:1;" position="0 0 -2"></a-entity>
+      <a-entity id="testTelegraph" material="color:brown" telegraph-interaction geometry="primitive:box;width:1;height:1;depth:1;" position="0 1 -2"></a-entity>
+
+      <a-entity id="testCharLock" number-lock-ws="mode:char;stringCode:JEFF;eventName:charlock-emit" geometry="primitive:box;width:5;height:1;depth:1;" position="0 0 2" rotation="0 180 0"></a-entity>
+      <a-entity id="testNumLock" number-lock-ws geometry="primitive:box;width:5;height:1;depth:1;" position="0 0 -2"></a-entity>
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
@@ -78,4 +90,8 @@
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
+  <script>
+    document.addEventListener("numlock-emit", function() { console.log("CODE COMPLETED");});
+    document.addEventListener("charlock-emit", function() { console.log("CHAR CODE COMPLETED");});
+  </script>
 </html>

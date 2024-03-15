@@ -2,6 +2,10 @@ AFRAME.registerComponent('number-lock-ws', {
     schema: {
         nums: {type:'int', default:4},
         code: {type:'int', default:1234},
+        stringCode: {type:'string', default:""},
+        mode: {type:'string', default:'num'},
+        textSize: {type:'int', default:3.5},
+        eventName: {type:'string', default:'numlock-emit'}
     },
     init() {
         const CONTEXT_AF = this;
@@ -16,6 +20,8 @@ AFRAME.registerComponent('number-lock-ws', {
         CONTEXT_AF.objDepth = CONTEXT_AF.objScale.split(';')[2].split(':')[1];
         CONTEXT_AF.slotWidth = CONTEXT_AF.objWidth / CONTEXT_AF.data.nums;
 
+
+        //Create all the slots for the number lock
         for (let i = 0; i < CONTEXT_AF.data.nums; i++) {
             let numSlot = document.createElement('a-entity');
 
@@ -25,7 +31,9 @@ AFRAME.registerComponent('number-lock-ws', {
             numSlot.setAttribute('circles-interactive-object', {type:'highlight'});
             numSlot.setAttribute('class', 'interactive');
             numSlot.setAttribute('position',{x:(CONTEXT_AF.slotWidth * i) + (CONTEXT_AF.slotWidth/2) - (CONTEXT_AF.objWidth/2),y:0,z:CONTEXT_AF.objDepth / 2});
-            numSlot.setAttribute('geometry', {primitive:'box', width:CONTEXT_AF.slotWidth * (4/5), height:CONTEXT_AF.objHeight * (4/5), depth:CONTEXT_AF.objHeight * (4/5)});
+            //numSlot.setAttribute('geometry', {primitive:'box', width:CONTEXT_AF.slotWidth * (4/5), height:CONTEXT_AF.objHeight * (4/5), depth:CONTEXT_AF.objHeight * (4/5)});
+            //gltf-model="#navmesh_gltf"
+            numSlot.setAttribute('gltf-model', '#numlock_model');
             numSlot.setAttribute('animation__lock', {property:'rotation', to:(360/10) +' 0 0', dur:500, startEvents:'rotate-slot'});
 
             numSlot.addEventListener('animationcomplete__lock', UpdateNumSlot);
@@ -35,12 +43,67 @@ AFRAME.registerComponent('number-lock-ws', {
                 numSlot.emit('rotate-slot');
             });
 
+            //add the text to the slot
+
+            let slotChars = []
+
+            if (CONTEXT_AF.data.mode === "num" ) {
+                console.log("Num mode");
+
+                slotChars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            }
+            else if (CONTEXT_AF.data.mode === "char") {
+                console.log("character mode");
+
+                slotChars = getSlotChars(CONTEXT_AF.data.stringCode.charAt(i), CONTEXT_AF.data.code.toString().charAt(i));
+            }
+
+            for (let j = 0; j < 10; j++) {
+                let textContainer = document.createElement('a-entity');
+                textContainer.setAttribute('rotation', {x:-(360/10) * j, y:0,z:0});
+
+                let text = document.createElement('a-entity');
+                text.setAttribute('position', {x:0,y:0,z:((CONTEXT_AF.slotWidth * (4/5)) / 2) - 0.1});
+                text.setAttribute('text', {width:CONTEXT_AF.data.textSize,value:slotChars[j],align:'center',color:'black'});
+
+                textContainer.appendChild(text);
+                numSlot.appendChild(textContainer);
+            }
 
             CONTEXT_AF.el.appendChild(numSlot);
 
             CONTEXT_AF.combination = CONTEXT_AF.combination + "0";
         }
 
+        function getSlotChars(includeChar, codePos) {
+            console.log(includeChar);
+            console.log(codePos);
+            let possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            includeChar = includeChar.toUpperCase();
+            let slotString = [];
+
+            for (let i = 0; i < possibleCharacters.length; i++) {
+                if (possibleCharacters.charAt(i) === includeChar) {
+                    for (let j = 0; j < 10; j++) {
+                        let charIndex = (i - codePos) + j;
+
+                        if (charIndex < 0) {
+                            charIndex += possibleCharacters.length;
+                        }
+                        else if (charIndex >= possibleCharacters.length) {
+                            charIndex -= possibleCharacters.length;
+                        }
+
+                        slotString.push(possibleCharacters.charAt(charIndex));
+                    }
+                }
+            }
+
+            console.log(slotString);
+            return slotString;
+        }
+
+        //Rotate the clicked slot and update the code of the lock
         function UpdateNumSlot() {
             let toRot = this.getAttribute('rotation').x + (360/10);
             this.setAttribute('animation__lock', {to: toRot + ' 0 0'});
@@ -80,7 +143,7 @@ AFRAME.registerComponent('number-lock-ws', {
                 CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {rotatedSlot:this.getAttribute('id'), room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             }
 
-            //listen for when others turn on campfire
+            //listen for when others makes changes to the numberlock
             CONTEXT_AF.socket.on(CONTEXT_AF.EventName, function(data) {
                 CONTEXT_AF.turnNumSlot(data.rotatedSlot);
             });
@@ -120,6 +183,8 @@ AFRAME.registerComponent('number-lock-ws', {
         }
     },
     update() {},
+
+    //Rotates the number slot that was received via event by another user
     turnNumSlot : function (numSlotID) {
         const CONTEXT_AF = this;
 
@@ -130,6 +195,7 @@ AFRAME.registerComponent('number-lock-ws', {
             }
         }
     },
+    //Position the number lock to match the current state of the lock in the world
     setNumSlot : function (state) {
         const CONTEXT_AF = this;
         CONTEXT_AF.combination = state;
@@ -140,10 +206,15 @@ AFRAME.registerComponent('number-lock-ws', {
             CONTEXT_AF.CheckCode();
         }
     },
+    //Check if the current code matches the solution to the lock
     CheckCode : function () {
         const CONTEXT_AF = this;
         if (parseInt(CONTEXT_AF.combination) === CONTEXT_AF.data.code) {
-            console.log("Unlocked");
+
+            const lockEvent = new CustomEvent(CONTEXT_AF.data.eventName);
+
+            document.dispatchEvent(lockEvent);
+
             CONTEXT_AF.numSlots.forEach(numSlot => {
                 numSlot.setAttribute('circles-interactive-object', {enabled: false});
             });
