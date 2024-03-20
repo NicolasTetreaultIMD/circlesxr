@@ -14,6 +14,10 @@
   <a-scene circles_scene_properties>
     <a-assets>
 
+      <a-asset-item id="buttonTop-gltf" src="assets/Button/Button_Top.glb"></a-asset-item>
+      <a-asset-item id="button-gltf" src="assets/Button/Button.glb"></a-asset-itme>
+      <a-asset-item id="buttonBase-gltf" src="assets/Button/Button_Base.glb"></a-asset-item>
+
       <a-asset-item id="telegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
       <a-asset-item id="MissionControl-gltf" src="assets/MissonControl.glb"></a-asset-item>
       <a-asset-item id="numlock_model" src="assets/LockDial.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -42,6 +46,12 @@
       <a-entity id="passwordLock" number-lock="slotPos:0; mode:char; code:2734; stringCode:DAHS; eventName:charlock-emit" geometry="primitive:box;width:2;height:1.04;depth:0.6;" position="-0.261 0.611 3.387" rotation="-64.877 180 0" scale="0.405 0.405 0.405" material="color:#4d4d4d"></a-entity>
 
       <a-entity id="RoomQuestion" position="-0.303 1.572 3.693" rotation="0 180 0" text="width:4;value:What is a long pressed called \n in morse code?;align:center;color:white"></a-entity>
+
+      <a-entity id="button-container" position="-1.312 0.581 3.374">
+        <a-entity id="btnLid" gltf-model="#buttonTop-gltf"></a-entity>
+        <a-entity id="btn" gltf-model="#button-gltf"></a-entity>
+        <a-entity gltf-model="#buttonBase-gltf"></a-entity>
+      </a-entity>
 
       <!-- <a-entity id="passwordText" position="-0.303 1.181 3.693" rotation="0 180 0" text="width:4;align:center;color:white;letterSpacing:30"></a-entity> -->
     
