@@ -5,6 +5,7 @@
 
   <script src="js/telegraph-interaction.js"></script>
   <script src="js/number-lock.js"></script>
+  <script src="js/end-level.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -43,15 +44,22 @@
       <a-entity light="type: spot; color: #FFF; intensity:10;"></a-entity>
 
       <a-entity id="telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#telegraph-gltf" position="0.904 0.582 3.390" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
-      <a-entity id="passwordLock" number-lock="slotPos:0; mode:char; code:2734; stringCode:DAHS; eventName:charlock-emit" geometry="primitive:box;width:2;height:1.04;depth:0.6;" position="-0.261 0.611 3.387" rotation="-64.877 180 0" scale="0.405 0.405 0.405" material="color:#4d4d4d"></a-entity>
+      <a-entity id="passwordLock" number-lock="slotPos:0; mode:char; code:2734; stringCode:DAHS; eventName:openLid-emit" geometry="primitive:box;width:2;height:1.04;depth:0.6;" position="-0.261 0.611 3.387" rotation="-64.877 180 0" scale="0.405 0.405 0.405" material="color:#4d4d4d"></a-entity>
 
-      <a-entity id="RoomQuestion" position="-0.303 1.572 3.693" rotation="0 180 0" text="width:4;value:What is a long pressed called \n in morse code?;align:center;color:white"></a-entity>
+      <a-entity id="RoomQuestion" position="-0.303 1.572 3.693" rotation="0 180 0" text="width:4;value:What are long presses called \n in morse code?;align:center;color:white"></a-entity>
 
       <a-entity id="button-container" position="-1.312 0.581 3.374">
-        <a-entity id="btnLid" gltf-model="#buttonTop-gltf"></a-entity>
-        <a-entity id="btn" gltf-model="#button-gltf"></a-entity>
+        <a-entity id="btnLid" position="0 0.0615 0.08791">
+          <a-entity gltf-model="assets/Button/Button_Top.glb"></a-entity>
+        </a-entity>
+        <a-entity id="btn" gltf-model="#button-gltf" end-level circles-interactive-object="type:scale;"></a-entity>
         <a-entity gltf-model="#buttonBase-gltf"></a-entity>
       </a-entity>
+
+      <a-entity id="Hub-clear"
+                  position="-2.729 -2 -1.752" rotation="0 -45.000 0" scale="0.5 0.5 0.5"
+                  circles-portal="img_src:assets/TelegraphRoom_Temp.png; title_text:Return to Hub; link_url:/w/TTime_HubTel"
+                  shadow></a-entity>
 
       <!-- <a-entity id="passwordText" position="-0.303 1.181 3.693" rotation="0 180 0" text="width:4;align:center;color:white;letterSpacing:30"></a-entity> -->
     
@@ -61,4 +69,11 @@
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>
  </body>
+
+ <script>
+  document.addEventListener("openLid-emit", function() { 
+    console.log('OPEN LID');
+    document.querySelector('#btnLid').setAttribute('animation', {property: 'rotation', from:'0 0 0', to:'120 0 0', dur:2000});
+  });
+ </script>
 </html>
