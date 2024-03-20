@@ -2,6 +2,9 @@
 <head>
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
+
+  <script src="js/telegraph-interaction.js"></script>
+  <script src="js/number-lock.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -11,12 +14,40 @@
   <a-scene circles_scene_properties>
     <a-assets>
 
+      <a-asset-item id="telegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
+      <a-asset-item id="MissionControl-gltf" src="assets/MissonControl.glb"></a-asset-item>
+      <a-asset-item id="numlock_model" src="assets/LockDial.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <img id="dotbtn_texture" src="assets/textures/dotBtn.png" crossorigin="anonymous">
+      <img id="dashbtn_texture" src="assets/textures/dashBtn.png" crossorigin="anonymous">
+      <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
+
+      <!-- cretit: "SOS-MorseCode" Pixabay - https://pixabay.com/sound-effects/sos-morsecode-31731/-->
+      <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+      <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
 
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
+
+    <a-entity id = "room" gltf-model="#MissionControl-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+
+      <a-entity light="type: ambient; color: #FFF; intensity:10;"></a-entity>
+      <a-entity light="type: spot; color: #FFF; intensity:10;"></a-entity>
+
+      <a-entity id="telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#telegraph-gltf" position="0.904 0.582 3.390" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
+      <a-entity id="passwordLock" number-lock="slotPos:0;mode:char;stringCode:JEFF;eventName:charlock-emit" geometry="primitive:box;width:2;height:1.04;depth:0.6;" position="-0.41 0.577 3.293" rotation="-90 180 0" scale="0.405 0.405 0.405" material="color:#4d4d4d"></a-entity>
+
+      <a-entity id="RoomQuestion" position="0 1 0" rotation="0 180 0" text="width:4;value:Why are we here?;align:center;color:white"></a-entity>
+
+      <!-- let text = document.createElement('a-entity');
+                text.setAttribute('position', {x:0,y:0,z:0.399});
+                text.setAttribute('text', {width:CONTEXT_AF.data.textSize,value:slotChars[j],align:'center',color:'black'}); -->
+    
+    </a-entity>
   </a-scene>
 
   <!-- Circles' end scripts [REQUIRED] -->
