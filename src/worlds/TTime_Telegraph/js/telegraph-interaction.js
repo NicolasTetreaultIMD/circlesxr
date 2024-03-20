@@ -192,6 +192,9 @@ AFRAME.registerComponent('telegraph-interaction', {
         CONTEXT_AF.World1Name = "TTime_MissionControl";
         CONTEXT_AF.World2Name = "TTime_Telegraph";
 
+        CONTEXT_AF.Group1Name = "missionControl";
+        CONTEXT_AF.Group2Name = "timeTraveler";
+
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
@@ -238,10 +241,10 @@ AFRAME.registerComponent('telegraph-interaction', {
 
                     //Emit the message to users in the specified other world
                     if (CIRCLES.getCirclesWorldName() === CONTEXT_AF.World1Name) {
-                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World2Name});
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CONTEXT_AF.Group2Name, world:CONTEXT_AF.World2Name});
                     }
                     else {
-                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World1Name});
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CONTEXT_AF.Group1Name, world:CONTEXT_AF.World1Name});
                     }
     
                     //Start playing the message
