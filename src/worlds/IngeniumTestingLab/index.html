@@ -1,0 +1,109 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets timeout=30000>
+      <a-asset-item id="IngeniumLab-gltf" src="assets/Ingenium_Lab_Room.glb"></a-asset-item>
+      <img id="Infographic1" src="assets/EscapeRoom_Telegraph_Infographic1.png">
+      <img id="Infographic2" src="assets/EscapeRoom_Telegraph_Infographic2.png"> 
+      <img id="Infographic3" src="assets/EscapeRoom_Telegraph_Infographic3.png"> 
+      <img id="Infographic4" src="assets/EscapeRoom_Telegraph_Infographic4.png">      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+    <a-entity id = "lab" gltf-model="#IngeniumLab-gltf" id="lab" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+
+    <a-entity light="type: ambient; color: #FFF; intensity:2;"></a-entity>
+      
+    <a-entity id="poster1"
+                position="0 1 0" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 -90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic1; side:double;"></a-entity>
+
+    <a-entity id="poster2"
+                position="0 1 -3" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 -90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic2; side:double;"></a-entity>
+
+    <a-entity id="poster3"
+                position="0 1 3" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 -90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic3; side:double;"></a-entity>
+
+    <a-entity id="poster4"
+                position="0 1 6" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 -90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic4; side:double;"></a-entity>
+
+    <a-entity id="spawnPoint" circles-spawnpoint position="-7 -0.1 -15" rotation="0 180 0"></a-entity>
+
+    <a-entity id="TimeTraveler-Group"
+                position="-10 1.7 -21.11" rotation="0 -90 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Time Traveler Group; link_url:/w/IngeniumTestingLab?group=timeTraveler"
+                shadow></a-entity>
+
+    <a-entity id="MissionControl-Group"
+                position="-7 1.7 -21.11" rotation="0 -90 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Mission Control Group; link_url:/w/IngeniumTestingLab?group=missionControl"
+                shadow></a-entity>
+
+    <a-entity id="Hub"
+                position="-4 1.7 -21.11" rotation="0 -90 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Regroup; link_url:/w/IngeniumTestingLab?group=explore"
+                shadow></a-entity>
+
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>
