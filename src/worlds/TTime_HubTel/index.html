@@ -22,10 +22,65 @@
 
     <a-entity id = "lab" gltf-model="#IngeniumLab-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
 
-      <a-entity id="telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="assets/telegraph.glb" position="3.09577 0.98801 -4.08334" scale="2.719 2.719 2.719" rotation="0 -61.790633415883626 0"></a-entity>
+      <a-entity light="type: ambient; intensity: 3"></a-entity>
+      <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #dcf6fe" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
+      <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #dcf6fe" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
 
-      <a-entity light="type: ambient; color: #FFF; intensity:10;"></a-entity>
-      <a-entity light="type: spot; color: #FFF; intensity:10;"></a-entity>
+      <!-- LIGHTS SECTION 1-->
+    <a-entity rotation="0 90 0" position="-1.5 1.5 0.8">
+      <!-- ROW 1 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 2 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 3 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <!-- LIGHTS SECTION 2-->
+    <a-entity rotation="0 90 0" position="-1.5 1.5 6.25">
+      <!-- ROW 1 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 2 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 3 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <!-- LIGHTS SECTION 3 -->
+    <a-entity rotation="0 90 0" position="-1.5 1.5 -5">
+      <!-- ROW 1 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>    
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 2 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 3 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+      <a-entity id="telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="assets/telegraph.glb" position="3.09577 0.98801 -4.08334" scale="2.719 2.719 2.719" rotation="0 -61.790633415883626 0"></a-entity>
 
       <a-entity id="TimeTraveler-Group"
                   position="-4.31 1.18 -0.222" rotation="0 0 0"
