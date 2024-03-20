@@ -100,6 +100,13 @@ AFRAME.registerComponent('number-lock', {
                 }
             }
 
+            let passwordDisplay = document.querySelector("#passwordText");
+            if (passwordDisplay != null) {
+                for (let i = 0; i < CONTEXT_AF.data.nums; i++) {
+                    
+                }
+            }
+
             console.log(slotString);
             return slotString;
         }
