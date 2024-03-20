@@ -20,13 +20,13 @@ AFRAME.registerComponent('end-level', {
             }
 
             function enablePortal() {
-                document.querySelector('#Hub-clear').setAttribute('position', {x:-2.729, y:1, z:-1.752});
+                document.querySelector('#Hub-clear').setAttribute('position', {x:-3.474, y:1, z:-1.341});
             }
 
             function emitEndLevel() {
                 console.log("END");
                 enablePortal();
-                CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {room:'timeTraveler', world:'TTime_Telegraph'});
             }
 
             //listen for when others makes changes to the numberlock
