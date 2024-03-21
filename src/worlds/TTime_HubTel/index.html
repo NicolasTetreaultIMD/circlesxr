@@ -1,0 +1,108 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+
+      <a-asset-item id="telegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
+      <a-asset-item id="IngeniumLab-gltf" src="assets/Ingenium_Lab.glb"></a-asset-item>
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+
+    <a-entity id = "lab" gltf-model="#IngeniumLab-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+
+      <a-entity light="type: ambient; intensity: 3"></a-entity>
+      <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #dcf6fe" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
+      <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #dcf6fe" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
+
+      <!-- LIGHTS SECTION 1-->
+    <a-entity rotation="0 90 0" position="-1.5 1.5 0.8">
+      <!-- ROW 1 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 2 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 3 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <!-- LIGHTS SECTION 2-->
+    <a-entity rotation="0 90 0" position="-1.5 1.5 6.25">
+      <!-- ROW 1 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 2 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 3 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <!-- LIGHTS SECTION 3 -->
+    <a-entity rotation="0 90 0" position="-1.5 1.5 -5">
+      <!-- ROW 1 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>    
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 2 -->
+      <a-entity geometry="primitive: cylinder" position="3.5 3.767 1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="3.5 3.635 1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <!-- ROW 3 -->
+      <a-entity geometry="primitive: cylinder" position="2 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="2 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+
+      <a-entity geometry="primitive: cylinder" position="5 3.767 4.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
+      <a-entity geometry="primitive: circle" position="5 3.635 4.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+      <a-entity id="telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="assets/telegraph.glb" position="3.09577 0.98801 -4.08334" scale="2.719 2.719 2.719" rotation="0 -61.790633415883626 0"></a-entity>
+
+      <a-entity id="TimeTraveler-Group"
+                  position="-4.31 1.18 -0.222" rotation="0 0 0"
+                  material="side:back;"
+                  circles-portal="img_src:assets/TelegraphRoom_Temp.png; title_text:Telegraph Group; link_url:/w/TTime_Telegraph?group=timeTraveler"
+                  shadow></a-entity>
+
+      <a-entity id="MissionControl-Group"
+                  position="-4.31 1.18 -4.75" rotation="0 0 0"
+                  circles-portal="img_src:assets/MissionControlRoom_Temp.png; title_text:Mission Control Group; link_url:/w/TTime_MissionControl?group=missionControl"
+                  shadow></a-entity>
+
+      <a-entity circles-checkpoint position="1.860 0.05 -2.580"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="0.610 0.05 -8.228"></a-entity>
+      <a-entity circles-checkpoint position="-2.896 0.05 -4.730"></a-entity>
+      <a-entity circles-checkpoint position="-2.896 0.05 -0.208"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.148 0.05 4.963"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.455 0.05 -1.794"></a-entity>
+    </a-entity>
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>

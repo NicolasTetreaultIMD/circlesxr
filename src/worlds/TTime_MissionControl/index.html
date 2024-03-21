@@ -1,0 +1,124 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+
+  <script src="js/telegraph-interaction.js"></script>
+  <script src="js/number-lock.js"></script>
+  <script src="js/end-level.js"></script>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+
+      <a-asset-item id="buttonTop-gltf" src="assets/Button/Button_Top.glb"></a-asset-item>
+      <a-asset-item id="button-gltf" src="assets/Button/Button.glb"></a-asset-itme>
+      <a-asset-item id="buttonBase-gltf" src="assets/Button/Button_Base.glb"></a-asset-item>
+
+      <a-asset-item id="telegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
+      <a-asset-item id="MissionControl-gltf" src="assets/MissonControl.glb"></a-asset-item>
+      <a-asset-item id="numlock_model" src="assets/LockDial.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <img id="dotbtn_texture" src="assets/textures/dotBtn.png" crossorigin="anonymous">
+      <img id="dashbtn_texture" src="assets/textures/dashBtn.png" crossorigin="anonymous">
+      <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
+      <img id="morseCode" src="assets/textures/morseCode.jpg">
+
+      <!-- cretit: "SOS-MorseCode" Pixabay - https://pixabay.com/sound-effects/sos-morsecode-31731/-->
+      <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+      <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+
+    <a-entity id = "room" gltf-model="#MissionControl-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+
+      <a-entity light="type: ambient; intensity: 2"></a-entity>
+      <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #fbe0b1;" position="-0.43992 6.62069 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
+      <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #fbe0b1;" position="-0.1674 -3.18092 0" rotation="90 0 0" scale=""></a-entity>
+
+    <!-- LIGHTS ROW 1-->
+    <a-entity rotation="0 90 0" position="0 0 0.08894">
+      <a-entity geometry="" position="-2.37855 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #454545"></a-entity>
+      <a-entity geometry="" position="-0.2039 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #454545"></a-entity>
+      <a-entity geometry="" position="1.93308 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #454545"></a-entity>
+  
+      <a-entity geometry="primitive: plane" position="-2.37855 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="-0.2039 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="1.93308 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <!-- LIGHTS ROW 2 -->
+    <a-entity rotation="0 90 0" position="2.3 0 0.08894">
+      <a-entity geometry="" position="-2.37855 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #454545"></a-entity>
+      <a-entity geometry="" position="-0.2039 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #454545"></a-entity>
+      <a-entity geometry="" position="1.93308 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #454545"></a-entity>
+
+      <a-entity geometry="primitive: plane" position="-2.37855 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="-0.2039 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="1.93308 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+      <a-entity id="telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#telegraph-gltf" position="0.904 0.582 3.390" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
+      <a-entity id="passwordLock" number-lock="slotPos:0; mode:char; code:2734; stringCode:DAHS; eventName:openLid-emit" geometry="primitive:box;width:2;height:1.04;depth:0.6;" position="-0.261 0.611 3.387" rotation="-64.877 180 0" scale="0.405 0.405 0.405" material="color:#4d4d4d"></a-entity>
+
+      <a-entity id="RoomQuestion" position="-0.303 1.572 3.693" rotation="0 180 0" text="width:4;value:What are long presses called \n in morse code?;align:center;color:white"></a-entity>
+
+      <a-entity id="button-container" position="-1.312 0.581 3.374">
+        <a-entity id="btnLid" position="0 0.0615 0.08791">
+          <a-entity gltf-model="assets/Button/Button_Top.glb"></a-entity>
+        </a-entity>
+        <a-entity id="btn" gltf-model="#button-gltf" end-level circles-interactive-object="type:scale;"></a-entity>
+        <a-entity gltf-model="#buttonBase-gltf"></a-entity>
+      </a-entity>
+
+      <a-entity id="Hub-clear"
+                  position="-2.729 -2 -1.752" rotation="0 -45.000 0" scale="0.5 0.5 0.5"
+                  circles-portal="img_src:assets/TelegraphRoom_Temp.png; title_text:Return to Hub; link_url:/w/TTime_HubTel"
+                  shadow>
+                </a-entity>
+
+    <!-- MORSE CODE POSTER -->
+    <a-entity id="morseCodePoster"
+                position="-3.8 1.732 1.644" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 -90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5; depth: 2.25;"
+                material="src:#morseCode; side:double;">
+
+              <a-entity geometry="primitive: box;" position="0 0 0" rotation="90 90 0" scale="2.35 0.001 1.6" material="color: #454545"></a-entity>
+              
+              </a-entity>
+
+    <!-- <a-entity id="passwordText" position="-0.303 1.181 3.693" rotation="0 180 0" text="width:4;align:center;color:white;letterSpacing:30"></a-entity> -->
+    
+    </a-entity>
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+
+ <script>
+  document.addEventListener("openLid-emit", function() { 
+    console.log('OPEN LID');
+    document.querySelector('#btnLid').setAttribute('animation', {property: 'rotation', from:'0 0 0', to:'120 0 0', dur:2000});
+  });
+ </script>
+</html>

@@ -1,0 +1,50 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+
+  <script src="js/telegraph-interaction.js"></script>
+  <script src="js/end-level.js"></script>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+      
+      <a-asset-item id="IngeniumTelegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
+      <a-asset-item id="IngeniumTelegraphRoom-gltf" src="assets/TelegraphRoom.glb"></a-asset-item>
+      
+      <img id="dotbtn_texture" src="assets/textures/dotBtn.png" crossorigin="anonymous">
+      <img id="dashbtn_texture" src="assets/textures/dashBtn.png" crossorigin="anonymous">
+      <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
+      
+      <!-- cretit: "SOS-MorseCode" Pixabay - https://pixabay.com/sound-effects/sos-morsecode-31731/-->
+      <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+      <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+      
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+    
+    <circles-manager-avatar/>
+    
+    <a-entity id = "telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#IngeniumTelegraph-gltf" position="0 1.055 0" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
+    <a-entity id = "telgraphroom" gltf-model="#IngeniumTelegraphRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+
+    <a-entity id="RoomQuestion" position="-0.303 2.246 3.796" rotation="0 180 0" text="width:4;value:What are long presses called \n in morse code?;align:center;color:white"></a-entity>
+
+    <a-entity id="Hub-clear"
+                  position="-2.729 -2 -1.752" rotation="0 -45.000 0" scale="0.5 0.5 0.5"
+                  circles-portal="img_src:assets/TelegraphRoom_Temp.png; title_text:Return to Hub; link_url:/w/TTime_HubTel"
+                  shadow end-level></a-entity>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>
