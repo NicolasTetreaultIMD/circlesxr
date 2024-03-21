@@ -91,11 +91,17 @@
                                   label_on:false;"
                 geometry="primitive:box; width:0.01; height:1.5;"
                 material="src:#Infographic4; side:double;"></a-entity>
-    
-    
-    <a-entity light="type: ambient; intensity: 1.5"></a-entity>
-    <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #daa76c" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
-    <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #daa76c" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
+
+    <a-entity>
+      <a-entity geometry="primitive: cylinder" position="0 3.165 0" scale="0.35 0.05 0.35" material="color: #2e0f05"></a-entity>
+      <a-entity geometry="primitive: sphere" position="0 3.14595 0" scale="0.3 0.135 0.3" material="color: #febc86; emissive: #ff9500; emissiveIntensity: 2.3"></a-entity>
+      <a-entity geometry="primitive: sphere" position="0 3.03565 0" scale="0.05 0.05 0.05" material="color: #000000; emissive: #000000; emissiveIntensity: 2.3"></a-entity>
+      <a-entity geometry="primitive: sphere" position="0 3.02075 0" scale="0.025 0.05 0.025" material="color: #000000; emissive: #000000; emissiveIntensity: 2.3"></a-entity>
+    </a-entity>
+
+    <a-entity light="type: ambient; intensity: 3; color: fff1e5;"></a-entity>
+    <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #feb67c" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
+    <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #feb67c" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
 
     <a-entity id = "telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#IngeniumTelegraph-gltf" position="0 1.055 0" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
     <a-entity id = "telgraphroom" gltf-model="#IngeniumTelegraphRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
