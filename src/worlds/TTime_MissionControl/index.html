@@ -76,7 +76,7 @@
         <a-entity id="btnLid" position="0 0.0615 0.08791">
           <a-entity gltf-model="assets/Button/Button_Top.glb"></a-entity>
         </a-entity>
-        <a-entity id="btn" gltf-model="#button-gltf" end-level circles-interactive-object="type:scale;"></a-entity>
+        <a-entity id="btn" gltf-model="#button-gltf" end-level circles-interactive-object="type:scale;enabled:false"></a-entity>
         <a-entity gltf-model="#buttonBase-gltf"></a-entity>
       </a-entity>
 
@@ -124,6 +124,7 @@
   document.addEventListener("openLid-emit", function() { 
     console.log('OPEN LID');
     document.querySelector('#btnLid').setAttribute('animation', {property: 'rotation', from:'0 0 0', to:'120 0 0', dur:2000});
+    document.querySelector('#btn').setAttribute('circles-interactive-object', {enabled: true});
   });
  </script>
 </html>
