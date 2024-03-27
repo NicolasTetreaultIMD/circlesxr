@@ -13,6 +13,7 @@
 
       <a-asset-item id="IngeniumLab-gltf" src="assets/Ingenium_Lab.glb"></a-asset-item>
       <!-- Circles' built-in assets [REQUIRED] -->
+      <a-asset-item id="navmesh_gltf" src="assets/Ingenium_Lab_NavMesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       <circles-assets/>
     </a-assets>
 
@@ -20,6 +21,7 @@
     <circles-manager-avatar/>
 
     <a-entity id = "lab" gltf-model="#IngeniumLab-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <a-entity light="type: ambient; intensity: 3"></a-entity>
       <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #dcf6fe" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
