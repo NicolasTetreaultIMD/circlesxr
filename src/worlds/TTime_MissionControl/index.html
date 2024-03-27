@@ -32,6 +32,7 @@
       <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
       <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
 
+      <a-asset-item id="navmesh_gltf" src="assets/MissonControl_NavMesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
@@ -40,6 +41,7 @@
     <circles-manager-avatar/>
 
     <a-entity id = "room" gltf-model="#MissionControl-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <a-entity light="type: ambient; intensity: 2"></a-entity>
       <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #fbe0b1;" position="-0.43992 6.62069 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
