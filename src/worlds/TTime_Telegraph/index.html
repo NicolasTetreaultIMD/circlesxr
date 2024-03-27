@@ -30,6 +30,8 @@
       <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
       <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
       
+      <a-asset-item id="navmesh_gltf" src="assets/TelegraphRoom_NavMesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
@@ -104,7 +106,9 @@
     <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #feb67c" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
 
     <a-entity id = "telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#IngeniumTelegraph-gltf" position="0 1.055 0" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
-    <a-entity id = "telgraphroom" gltf-model="#IngeniumTelegraphRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+    <a-entity id = "telgraphroom" gltf-model="#IngeniumTelegraphRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+    </a-entity>
 
     <a-entity id="RoomQuestion" position="-0.303 2.246 3.796" rotation="0 180 0" text="width:4;value:What are long presses called \n in morse code?;align:center;color:white"></a-entity>
 
