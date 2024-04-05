@@ -20,7 +20,9 @@
 
     <circles-manager-avatar/>
 
-    <a-entity rotary-interaction="" position="0 1 -1" geometry="depth: 0.5; height: 0.5; width: 0.5"></a-entity>
+    <a-entity rotary-interaction="enabled:true" position="0 1 -1">
+      <a-entity id="rotary-wheel" geometry="depth: 0.5; height: 0.5; width: 0.5"></a-entity>
+    </a-entity>
 
     <!-- <a-entity id="Hub-clear"
                   position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
