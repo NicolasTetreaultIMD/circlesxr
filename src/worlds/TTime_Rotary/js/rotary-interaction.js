@@ -13,11 +13,14 @@ AFRAME.registerComponent('rotary-interaction', {
         CONTEXT_AF.timeElapsed = 0;
         CONTEXT_AF.playAnim = false;
 
-        //CONTEXT_AF.el.setAttribute('animation__rotateWheel', {'property': 'rotation', 'to': {x: 0, y: 0, z: 45}, 'dur':1000, 'startEvents': 'startWheelAnim'});
-        //CONTEXT_AF.el.setAttribute('animation__returnWheel', {'property': 'rotation', 'to':{x:0,y:0,z:0}, 'dur':1000, 'startEvents': 'animationcomplete__rotateWheel', 'autoplay': false});
         //CONTEXT_AF.el.addEventListener('animationcomplete__returnWheel', function(){CONTEXT_AF.rotaryElements.setAttribute('circles-interactive-visible', 'true');});
-        CONTEXT_AF.el.setAttribute('animation__rotateWheel', {'property': 'rotation','from':{x:0, y:0, z:0}, 'to': {x: 0, y: 0, z: -90}, 'dur':1000, 'startEvents': 'startWheelAnim', 'autoplay':false});
-        CONTEXT_AF.el.setAttribute('animation__returnWheel', {'property': 'rotation', 'to':{x:0,y:0,z:0}, 'dur':1000, 'startEvents': 'animationcomplete__rotateWheel'});
+
+        //animations for rotary
+        for (let i = 0; i < 10; i++) {
+            CONTEXT_AF.el.setAttribute('animation__rotateWheel' + i, {'property': 'rotation','from':{x:0, y:0, z:0}, 'to': {x: 0, y: 0, z: -(CONTEXT_AF.data.amgledif * (i + 1) + CONTEXT_AF.data.startangle)}, 'dur':1000, 'startEvents': 'startWheelAnim' + i, 'autoplay':false});
+        }
+
+        CONTEXT_AF.el.setAttribute('animation__returnWheel', {'property': 'rotation', 'to':{x:0,y:0,z:0}, 'dur':1000, 'startEvents': 'animationcomplete__rotateWheel0,animationcomplete__rotateWheel1,animationcomplete__rotateWheel2,animationcomplete__rotateWheel3,animationcomplete__rotateWheel4,animationcomplete__rotateWheel5,animationcomplete__rotateWheel6,animationcomplete__rotateWheel7,animationcomplete__rotateWheel8,animationcomplete__rotateWheel9'});
         
         //Creates the rotary phone components
 
@@ -103,7 +106,10 @@ AFRAME.registerComponent('rotary-interaction', {
             //CONTEXT_AF.el.setAttribute('animation__rotateWheel', {'property': 'rotation', 'from':{x:0,y:0,z:0}, 'to': {x: 0, y: 0, z: -(CONTEXT_AF.data.amgledif * (val + 1) + CONTEXT_AF.data.startangle)}, 'dur':1000 + (50 * val), 'startEvents': 'startWheelAnim'});
             //CONTEXT_AF.el.setAttribute('animation__returnWheel', {'dur':1000 + (50 * val)});
 
-            CONTEXT_AF.el.emit('startWheelAnim');
+            CONTEXT_AF.el.setAttribute('animation__rotateWheel' + val, {'property': 'rotation','from':{x:0, y:0, z:0}, 'to': {x: 0, y: 0, z: -(CONTEXT_AF.data.amgledif * (val + 1) + CONTEXT_AF.data.startangle)}, 'dur':1000, 'startEvents': 'startWheelAnim' + val, 'autoplay':false});
+            CONTEXT_AF.el.setAttribute('animation__returnWheel', {'property': 'rotation', 'to':{x:0,y:0,z:0}, 'dur':1000, 'startEvents': 'animationcomplete__rotateWheel0,animationcomplete__rotateWheel1,animationcomplete__rotateWheel2,animationcomplete__rotateWheel3,animationcomplete__rotateWheel4,animationcomplete__rotateWheel5,animationcomplete__rotateWheel6,animationcomplete__rotateWheel7,animationcomplete__rotateWheel8,animationcomplete__rotateWheel9'});
+
+            CONTEXT_AF.el.emit('startWheelAnim' + val);
 
             CONTEXT_AF.playAnim = true;
         }
