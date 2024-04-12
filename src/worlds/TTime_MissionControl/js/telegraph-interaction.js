@@ -39,7 +39,7 @@ AFRAME.registerComponent('telegraph-interaction', {
         CONTEXT_AF.el.appendChild(CONTEXT_AF.morseLight);
 
         //Container for the other elements that need to be toggle off
-        console.log(CONTEXT_AF.data.scale);
+        //console.log(CONTEXT_AF.data.scale);
 
         let telegraphElements = document.createElement('a-entity');
         telegraphElements.setAttribute('id', 'telegraphElements');
