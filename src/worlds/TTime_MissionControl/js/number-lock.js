@@ -49,12 +49,12 @@ AFRAME.registerComponent('number-lock', {
             let slotChars = []
 
             if (CONTEXT_AF.data.mode === "num" ) {
-                console.log("Num mode");
+                //console.log("Num mode");
 
                 slotChars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
             }
             else if (CONTEXT_AF.data.mode === "char") {
-                console.log("character mode");
+                //console.log("character mode");
 
                 slotChars = getSlotChars(CONTEXT_AF.data.stringCode.charAt(i), CONTEXT_AF.data.code.toString().charAt(i));
             }
@@ -77,8 +77,8 @@ AFRAME.registerComponent('number-lock', {
         }
 
         function getSlotChars(includeChar, codePos) {
-            console.log(includeChar);
-            console.log(codePos);
+            //console.log(includeChar);
+            //console.log(codePos);
             let possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             includeChar = includeChar.toUpperCase();
             let slotString = [];
@@ -107,7 +107,7 @@ AFRAME.registerComponent('number-lock', {
                 }
             }
 
-            console.log(slotString);
+            //console.log(slotString);
             return slotString;
         }
 

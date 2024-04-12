@@ -6,6 +6,7 @@
   <script src="js/telegraph-interaction.js"></script>
   <script src="js/number-lock.js"></script>
   <script src="js/end-level.js"></script>
+  <script src="js/load-puzzles.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -69,44 +70,22 @@
       <a-entity geometry="primitive: plane" position="1.93308 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
     </a-entity>
 
-      <a-entity id="telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#telegraph-gltf" position="0.904 0.582 3.390" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
-      <a-entity id="passwordLock" number-lock="slotPos:0; mode:char; code:2734; stringCode:DAHS; eventName:openLid-emit" geometry="primitive:box;width:2;height:1.04;depth:0.6;" position="-0.261 0.611 3.387" rotation="-64.877 180 0" scale="0.405 0.405 0.405" material="color:#4d4d4d"></a-entity>
-
-      <a-entity id="RoomQuestion" position="-0.303 1.572 3.693" rotation="0 180 0" text="width:4;value:What are long presses called \n in morse code?;align:center;color:white"></a-entity>
-
-      <a-entity id="button-container" position="-1.312 0.581 3.374">
-        <a-entity id="btnLid" position="0 0.0615 0.08791">
-          <a-entity gltf-model="assets/Button/Button_Top.glb"></a-entity>
-        </a-entity>
-        <a-entity id="btn" gltf-model="#button-gltf" end-level circles-interactive-object="type:scale;enabled:false"></a-entity>
-        <a-entity gltf-model="#buttonBase-gltf"></a-entity>
+    <a-entity id="RoomQuestion" position="-0.303 1.572 3.693" rotation="0 180 0" text="width:4;;align:center;color:white"></a-entity>
+    <a-entity id="passwordLock" number-lock="slotPos:0; eventName:openLid-emit" geometry="primitive:box;width:2;height:1.04;depth:0.6;" position="-0.261 0.611 3.387" rotation="-64.877 180 0" scale="0.405 0.405 0.405" material="color:#4d4d4d"></a-entity>
+    
+    <a-entity id="button-container" position="-1.312 0.581 3.374">
+      <a-entity id="btnLid" position="0 0.0615 0.08791">
+        <a-entity gltf-model="assets/Button/Button_Top.glb"></a-entity>
       </a-entity>
-
-      <a-entity id="Hub-clear"
-                  position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
-                  circles-portal="img_src:assets/HubRoom_Preview.png; title_text:Return to Hub; link_url:/w/TTime_HubTel?group=explore"
-                  shadow>
-                </a-entity>
-
-    <!-- MORSE CODE POSTER -->
-    <a-entity id="morseCodePoster"
-                position="-3.8 1.732 1.644" rotation="0 0 0" scale="1 1 1"
-                shadow="receive:false; cast:false;"
-                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 -90 0; inspectPosition:0 0.2 0;
-                                  origScale:1 1 1; origRotation:0 0 0;
-                                  label_offset:0 2.2 0; arrow_position:down;
-                                  title:''; 
-                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
-                                  description_on: false;
-                                  label_text:The Future of Communication;
-                                  label_on:false;"
-                geometry="primitive:box; width:0.01; height:1.5; depth: 2.25;"
-                material="src:#morseCode; side:double;">
-
-              <a-entity geometry="primitive: box;" position="0 0 0" rotation="90 90 0" scale="2.35 0.001 1.6" material="color: #454545"></a-entity>
-              
-              </a-entity>
+      <a-entity id="btn" gltf-model="#button-gltf" end-level circles-interactive-object="type:scale;enabled:false"></a-entity>
+      <a-entity gltf-model="#buttonBase-gltf"></a-entity>
+    </a-entity>
+    
+    <a-entity id="Hub-clear"
+      position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
+      circles-portal="img_src:assets/HubRoom_Preview.png; title_text:Return to Hub; link_url:/w/TTime_HubTel?group=explore"
+      shadow>
+    </a-entity>
 
     <!-- <a-entity id="passwordText" position="-0.303 1.181 3.693" rotation="0 180 0" text="width:4;align:center;color:white;letterSpacing:30"></a-entity> -->
     
@@ -123,8 +102,29 @@
  </body>
 
  <script>
+
+  let hrefData = new URLSearchParams(location.search);
+  
+  console.log(hrefData.get('artefact'));
+
+
+  switch(hrefData.get('artefact')) {
+    case 'telegraph':
+      loadTelegraphPuzzle();
+      break;
+
+    case 'rotary':
+      loadRotaryPuzzle();
+      break;
+
+    case 'cell':
+      loadCellPuzzle();
+      break;
+  }
+
+
   document.addEventListener("openLid-emit", function() { 
-    console.log('OPEN LID');
+    //console.log('OPEN LID');
     document.querySelector('#btnLid').setAttribute('animation', {property: 'rotation', from:'0 0 0', to:'120 0 0', dur:2000});
     document.querySelector('#btn').setAttribute('circles-interactive-object', {enabled: true});
   });

@@ -1,5 +1,6 @@
 AFRAME.registerComponent('end-level', {
     schema: {
+        curRoom:{type:'int', default:0},
     },
     init() {
         const CONTEXT_AF = this;
@@ -8,7 +9,26 @@ AFRAME.registerComponent('end-level', {
         CONTEXT_AF.socket     = null;
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.EventName = "endRoom_event";
+  
+        
+        CONTEXT_AF.addCurRoomtoHub = function() {
+            let hrefData = new URLSearchParams(location.search);
+            let hubState = hrefData.get('hub_state');
+            
+            let tempNum = parseInt(hubState) % Math.pow(10, CONTEXT_AF.data.curRoom + 1);
+            tempNum = Math.floor(tempNum / Math.pow(10, CONTEXT_AF.data.curRoom));
+            
+            if (tempNum == 0) {
+                return (parseInt(hubState) + Math.pow(10, CONTEXT_AF.data.curRoom)).toString();
+            }
+        }
 
+
+        let hubLink = CONTEXT_AF.addCurRoomtoHub();
+        document.querySelector('#Hub-clear').setAttribute('circles-portal', {link_url: '/w/TTime_Hub?group=explore&hub_state=' + hubLink});
+
+
+        
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
