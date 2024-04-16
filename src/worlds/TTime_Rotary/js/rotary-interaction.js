@@ -215,6 +215,7 @@ AFRAME.registerComponent('rotary-interaction', {
                     //If the data has the morse input
                     if (data.rotaryInput != null) {
                         CONTEXT_AF.InputRotary(data.rotaryInput);
+                        CONTEXT_AF.rotary_sfx.components.sound.playSound();
                     }
     
                     //If the data has the reset request
