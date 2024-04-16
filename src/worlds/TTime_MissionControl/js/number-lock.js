@@ -22,6 +22,12 @@ AFRAME.registerComponent('number-lock', {
         CONTEXT_AF.slotWidth = CONTEXT_AF.objWidth / CONTEXT_AF.data.nums;
 
 
+        //Sound elements
+        CONTEXT_AF.dial_sfx = document.createElement('a-entity');
+        CONTEXT_AF.dial_sfx.setAttribute('sound', {src:'#dial_sfx'});
+
+        CONTEXT_AF.el.appendChild(CONTEXT_AF.dial_sfx);
+
         //Create all the slots for the number lock
         for (let i = 0; i < CONTEXT_AF.data.nums; i++) {
             let numSlot = document.createElement('a-entity');
@@ -195,6 +201,9 @@ AFRAME.registerComponent('number-lock', {
     //Rotates the number slot that was received via event by another user
     turnNumSlot : function (numSlotID) {
         const CONTEXT_AF = this;
+
+        CONTEXT_AF.dial_sfx.components.sound.stopSound();
+        CONTEXT_AF.dial_sfx.components.sound.playSound();
 
         if (CONTEXT_AF.el.getAttribute('id') == numSlotID.split('-')[0]) {
             let numSlot = document.querySelector('#' + numSlotID);
