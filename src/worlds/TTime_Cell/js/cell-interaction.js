@@ -1,4 +1,9 @@
-//Manages the telegraph interactions
+const CellState = {
+    subset: 0,
+    character: 1
+}
+
+//Manages the Cell Phone interactions
 AFRAME.registerComponent('cell-interaction', {
     schema: {
         angle:{type:'int', default:0},
@@ -7,176 +12,232 @@ AFRAME.registerComponent('cell-interaction', {
     init() {
         const CONTEXT_AF = this;
 
-        CONTEXT_AF.playbackMessg = "";
-        CONTEXT_AF.timeElapsed = 0;
-        CONTEXT_AF.delay = 0;
+        CONTEXT_AF.senderMsg = "";
+        CONTEXT_AF.receiverMsg = "";
+        CONTEXT_AF.lastInpt = -1;
+        CONTEXT_AF.inptState = CellState.subset;
+
+        CONTEXT_AF.charList = [[],['A', 'B', 'C'],['D','E','F'],['G','H','I'],['J','K','L'],['M','N','O'],['P','Q','R','S'],['T','U','V'],['W','X','Y','Z']];
 
         
-        //Creates the telegraph components
+        //Creates the Cell Phone components
+
+        //Container for the other elements
+
+        let cellElements = document.createElement('a-entity');
+        cellElements.setAttribute('id', 'cellElements');
+        cellElements.setAttribute('rotation', {x:-90,y:CONTEXT_AF.data.angle,z:0});
+        cellElements.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
         
-        //Light element
-        CONTEXT_AF.morseLight = document.createElement('a-entity');
-        CONTEXT_AF.morseLight.setAttribute('id', 'morseLight');
-        CONTEXT_AF.morseLight.setAttribute('position', {x:0.12,y:0,z:0.08});
-        CONTEXT_AF.morseLight.setAttribute('geometry', {primitive:'cylinder', height:0.3, radius:0.1});
-        CONTEXT_AF.morseLight.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
-        CONTEXT_AF.morseLight.setAttribute('material', {color:'#316934', emissive:'#00ff00', emissiveIntensity:0});
-
-        CONTEXT_AF.el.appendChild(CONTEXT_AF.morseLight);
-
-        //Container for the other elements that need to be toggle off
-        console.log(CONTEXT_AF.data.scale);
-
-        let telegraphElements = document.createElement('a-entity');
-        telegraphElements.setAttribute('id', 'telegraphElements');
-        telegraphElements.setAttribute('circles-interactive-visible', 'true');
-        telegraphElements.setAttribute('rotation', {x:0,y:CONTEXT_AF.data.angle,z:0});
-        telegraphElements.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
-        
-        CONTEXT_AF.telegraphElements = telegraphElements;
-
-        //Sound elements
-        CONTEXT_AF.dot_sfx = document.createElement('a-entity');
-        CONTEXT_AF.dot_sfx.setAttribute('sound', {src:'#dot_sfx'});
-        CONTEXT_AF.dot_sfx.addEventListener('sound-ended', function() {CONTEXT_AF.ToggleLight(false)});
-
-        CONTEXT_AF.dash_sfx = document.createElement('a-entity');
-        CONTEXT_AF.dash_sfx.setAttribute('sound', {src:'#dash_sfx'});
-        CONTEXT_AF.dash_sfx.addEventListener('sound-ended', function() {CONTEXT_AF.ToggleLight(false)});
-
-        telegraphElements.appendChild(CONTEXT_AF.dot_sfx);
-        telegraphElements.appendChild(CONTEXT_AF.dash_sfx);
+        CONTEXT_AF.cellElements = cellElements;
 
         //Morse Display
         //Is there a way to change the size of the text?
-        let morseDisplay = document.createElement('a-entity');
-        morseDisplay.setAttribute('id','morseDisplay');
-        morseDisplay.setAttribute('circles-label', {text:'', arrow_visible:false, offset:'0 1 0'});
-        morseDisplay.setAttribute('circles-interactive-visible', 'false');
+        let celInptDisplay = document.createElement('a-entity');
+        celInptDisplay.setAttribute('id','celInptDisplay');
+        celInptDisplay.setAttribute('circles-label', {text:'', arrow_visible:false, offset:'0 1 0'});
+        celInptDisplay.setAttribute('circles-interactive-visible', 'false');
         
-        telegraphElements.appendChild(morseDisplay);
-        CONTEXT_AF.textField = morseDisplay;
+        cellElements.appendChild(celInptDisplay);
+        CONTEXT_AF.celInptDisplay = celInptDisplay;
 
-        //Send/Clear Buttons
+        //Display for the Cell Phone Screen
 
+        let cellDisplayScreen = document.createElement('a-entity');
+        cellDisplayScreen.setAttribute('id', 'cellDisplayScreenCont');
+        cellDisplayScreen.setAttribute('position', {x:0,y:-0.61,z:0.6});
+        cellDisplayScreen.setAttribute('rotation', {x:90, y:0, z:0});
+
+        let senderText = document.createElement('a-entity');
+        senderText.setAttribute('position', {x:-0.237, y:-0.039, z:-0.003});
+        senderText.setAttribute('text', {align: 'right', value: '', color:'blue'});
+
+        let receiverText = document.createElement('a-entity');
+        receiverText.setAttribute('position', {x:0.237, y:-0.039, z:-0.003});
+        receiverText.setAttribute('text', {align: 'left', value: '', color:'green'});
+
+        cellDisplayScreen.appendChild(senderText);
+        cellDisplayScreen.appendChild(receiverText);
+
+
+
+        let charSelectionDisplay = document.createElement('a-entity');
+        charSelectionDisplay.setAttribute('id', 'charSelectionContainer');
+        charSelectionDisplay.setAttribute('position', {x:0,y:-0.05,z:0});
+        charSelectionDisplay.setAttribute('circles-interactive-visible', 'false');
+
+        let charSelectionBG = document.createElement('a-entity');
+        charSelectionBG.setAttribute('position', {x:0,y:0.01,z:0});
+        charSelectionBG.setAttribute('geometry', {primitive:'plane', width:0.4, height: 0.08});
+        charSelectionBG.setAttribute('material', {opacity:0.8, color:'black'});
+
+        let charSelection = document.createElement('a-entity');
+        charSelection.setAttribute('position', {x:0, y:0.01, z:0});
+        charSelection.setAttribute('text', {align: 'center', value: '1-A | 2-B | 3-C | 4-D'});
+
+        charSelectionDisplay.appendChild(charSelectionBG);
+        charSelectionDisplay.appendChild(charSelection);
+        cellDisplayScreen.appendChild(charSelectionDisplay);
+        cellElements.appendChild(cellDisplayScreen);
+
+
+        //Buttons
+        
         let comsBtnGrp = document.createElement('a-entity');
         comsBtnGrp.setAttribute('id', 'communicationButtonsGrp');
-        comsBtnGrp.setAttribute('position', {x:0,y:0.6,z:0.4});
+        comsBtnGrp.setAttribute('position', {x:0,y:-0.6,z:0.4});
         comsBtnGrp.setAttribute('rotation', {x:0,y:0,z:0});
+
+        for (let x = 0; x < 4; x++) {
+            if (x == 3) {
+                let numBtn = document.createElement('a-entity');
+                numBtn.setAttribute('id', 'numBtn0');
+                numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
+                numBtn.setAttribute('position', {x:0,y:0,z:-0.15 * x});
+                numBtn.setAttribute('circles-interactive-object', {type:'highlight'});
+                numBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+                numBtn.addEventListener('click', function() {receiveInpt(0);});
+                comsBtnGrp.appendChild(numBtn);
+            }
+
+            else {
+
+                for (let y = 0; y < 3; y++) {
+                    let numBtn = document.createElement('a-entity');
+                    numBtn.setAttribute('id', 'numBtn' + ((x*3) + y + 1));
+                    numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
+                    numBtn.setAttribute('position', {x:-0.15 + (0.15 * y),y:0,z:-0.15 * x});
+                    numBtn.setAttribute('circles-interactive-object', {type:'highlight'});
+                    numBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+                    numBtn.addEventListener('click', function() {receiveInpt((x*3) + y + 1);});
+    
+                    comsBtnGrp.appendChild(numBtn);
+                }
+            }
+
+        }
 
         let sendBtn = document.createElement('a-entity');
         sendBtn.setAttribute('id', 'sendBtn');
-        sendBtn.setAttribute('geometry', {primitive:'plane', height:0.15, width:0.3});
-        sendBtn.setAttribute('material', {color:'white'});
-        sendBtn.setAttribute('position', {x:0.4,y:0,z:0});
-        sendBtn.setAttribute('text', {width:2,value:'Send',align:'center',color:'black'});
-        sendBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95});
+        sendBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
+        sendBtn.setAttribute('material', {color:'red'});
+        sendBtn.setAttribute('position', {x:0.15,y:0,z:-0.15 * 4});
+        sendBtn.setAttribute('circles-interactive-object', {type:'highlight'});
         sendBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
 
         let resetBtn = document.createElement('a-entity');
         resetBtn.setAttribute('id', 'resetBtn');
-        resetBtn.setAttribute('geometry', {primitive:'plane', height:0.15, width:0.3});
+        resetBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
         resetBtn.setAttribute('material', {color:'white'});
-        resetBtn.setAttribute('position', {x:-0.4,y:0,z:0});
-        resetBtn.setAttribute('text', {width:2,value:'Reset',align:'center',color:'black'});
-        resetBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95});
+        resetBtn.setAttribute('position', {x:0,y:0,z:-0.15 * 4});
+        resetBtn.setAttribute('circles-interactive-object', {type:'highlight'});
         resetBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
-        resetBtn.addEventListener('click', ResetMessage);
 
         comsBtnGrp.appendChild(sendBtn);
         comsBtnGrp.appendChild(resetBtn);
-        telegraphElements.appendChild(comsBtnGrp);
+        cellElements.appendChild(comsBtnGrp);
 
-        //Input Buttons
+        CONTEXT_AF.el.appendChild(cellElements);
 
-        let inputBtnGrp = document.createElement('a-entity');
-        inputBtnGrp.setAttribute('id', 'inputButtonsGrp');
-        inputBtnGrp.setAttribute('position', {x:0,y:0.3,z:0.6});
-        inputBtnGrp.setAttribute('rotation', {x:-15,y:0,z:0});
+        function receiveInpt(inputBtn) {
+            inputCell(inputBtn);
+            CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {cellInput:inputBtn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+        }
 
-        let dotBtn = document.createElement('a-entity');
-        dotBtn.setAttribute('id', 'dotInputBtn');
-        dotBtn.setAttribute('geometry', {primitive:'plane', height:0.2, width:0.2});
-        dotBtn.setAttribute('material', {src:'#dotbtn_texture', transparent:true});
-        dotBtn.setAttribute('position', {x:-0.3,y:0,z:0});
-        dotBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95, click_sound:'#dot_sfx'});
-        dotBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+        function DisplayCharSelection(inputBtn) {
+            charSelectionDisplay.setAttribute('circles-interactive-visible', 'true');
 
-        let dashBtn = document.createElement('a-entity');
-        dashBtn.setAttribute('id', 'dashInputBtn');
-        dashBtn.setAttribute('geometry', {primitive:'plane', height:0.2, width:0.2});
-        dashBtn.setAttribute('material', {src:'#dashbtn_texture', transparent:true});
-        dashBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95, click_sound:'#dash_sfx'});
-        dashBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+            let selectionString = "";
+            let counter = 1;
+            CONTEXT_AF.charList[inputBtn - 1].forEach(char => {
+                if (counter != 1) {
+                    selectionString += " | ";
+                }
 
-        let spaceBtn = document.createElement('a-entity');
-        spaceBtn.setAttribute('id', 'spaceInputBtn');
-        spaceBtn.setAttribute('geometry', {primitive:'plane', height:0.2, width:0.2});
-        spaceBtn.setAttribute('material', {src:'#spacebtn_texture', transparent:true});
-        spaceBtn.setAttribute('position', {x:0.3,y:0,z:0});
-        spaceBtn.setAttribute('circles-interactive-object', {type:'scale', click_scale:0.95});
-        spaceBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+                selectionString += counter.toString() + "-" + char;
+                counter++;
+            });
 
-        inputBtnGrp.appendChild(dotBtn);
-        inputBtnGrp.appendChild(dashBtn);
-        inputBtnGrp.appendChild(spaceBtn);
-        telegraphElements.appendChild(inputBtnGrp);
+            charSelection.setAttribute('text', {value: selectionString});
+        }
 
-        CONTEXT_AF.el.appendChild(telegraphElements);
+        //Manage the received input
+        function inputCell(inputBtn) {
 
-        //Add the given morse input to the message string
-        function inputMorse(inputType) {
+            if (CONTEXT_AF.inptState == CellState.subset && inputBtn != 0 && inputBtn != 1) {
+                CONTEXT_AF.lastInpt = inputBtn;
 
-            //Current message string before adding anything
-            let textField = CONTEXT_AF.textField.getAttribute('circles-label').text;
+                DisplayCharSelection(inputBtn);
 
-            //If the text field is hidden then start the string over and make the field visible
-            if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == false) {
-                CONTEXT_AF.textField.setAttribute('circles-interactive-visible', true);
-
-                textField = '';
+                CONTEXT_AF.inptState = CellState.character;
             }
 
-            //Switch to decide which symbol to add based on the input type
-            switch(inputType) {
-                case MorseInput.dot:
-                    textField += '.';
-                    break;
-                case MorseInput.dash:
-                    textField += '-';
-                    break;
-                case MorseInput.space:
-                    //A space input will only be accepted if not the first character (avoid having a lot of nothing before the first beep)
-                    if (textField != '') {
-                        textField += '/';
+            else if (CONTEXT_AF.inptState == CellState.character || inputBtn == 0) {
+
+                //Current message string before adding anything
+                let textField = CONTEXT_AF.celInptDisplay.getAttribute('circles-label').text;
+    
+                //If the text field is hidden then start the string over and make the field visible
+                if (CONTEXT_AF.celInptDisplay.getAttribute('circles-interactive-visible') == false) {
+                    textField = '';
+                }
+    
+                if (inputBtn == 0) {
+                    textField += " ";
+                }
+                else {
+                    let inputChar = GetCharInpt(inputBtn);
+                    if (inputChar == null) {
+                        return;
                     }
-                    else {
-                        CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
-                    }
-                    break;
+                    textField += GetCharInpt(inputBtn);
+                }
+    
+                charSelectionDisplay.setAttribute('circles-interactive-visible', 'false');
+                CONTEXT_AF.celInptDisplay.setAttribute('circles-interactive-visible', true);
+                //Set the text field with the message with the new character
+                CONTEXT_AF.celInptDisplay.setAttribute('circles-label', {text: textField});
+
+                CONTEXT_AF.inptState = CellState.subset;
             }
 
-            //Set the text field with the message with the new character
-            CONTEXT_AF.textField.setAttribute('circles-label', {text: textField});
+        }
+
+        function GetCharInpt(inputBtn) {
+            return CONTEXT_AF.charList[CONTEXT_AF.lastInpt - 1][inputBtn - 1];
         }
 
         //Hides the text field to reste the morse code
         //No need to actualy reset the string since it will be reset in the next inputMorse()
         function ResetMessage() {
-            if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == true) {
-                CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
+            if (CONTEXT_AF.celInptDisplay.getAttribute('circles-interactive-visible') == true) {
+                CONTEXT_AF.celInptDisplay.setAttribute('circles-interactive-visible', false);
 
-                //console.log("MessageReset");
+                CONTEXT_AF.celInptDisplay.setAttribute('circles-label', {text: ""});
             }
+        }
+
+        function ReceiveMessage(role, msg) {
+            if (role == "Sender") {
+                CONTEXT_AF.senderMsg = msg;
+                CONTEXT_AF.receiverMsg = "";
+            }
+            else if (role == "Receiver") {
+                CONTEXT_AF.senderMsg = "";
+                CONTEXT_AF.receiverMsg = msg;
+            }
+
+            senderText.setAttribute('text', {value: CONTEXT_AF.senderMsg});
+            receiverText.setAttribute('text', {value: CONTEXT_AF.receiverMsg});
         }
 
         //connect to web sockets so we can sync the number lock between users
         CONTEXT_AF.socket     = null;
         CONTEXT_AF.connected  = false;
-        CONTEXT_AF.EventName = "telegraph_event";
+        CONTEXT_AF.EventName = "cell_event";
 
         CONTEXT_AF.World1Name = "TTime_MissionControl";
-        CONTEXT_AF.World2Name = "TTime_Telegraph";
+        CONTEXT_AF.World2Name = "TTime_Cell";
 
         CONTEXT_AF.Group1Name = "missionControl";
         CONTEXT_AF.Group2Name = "timeTraveler";
@@ -186,56 +247,38 @@ AFRAME.registerComponent('cell-interaction', {
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-            //Add events listeners for the input type sending event
-            dotBtn.addEventListener('click', function(){SendMorse(MorseInput.dot)});
-            dashBtn.addEventListener('click', function(){SendMorse(MorseInput.dash)});
-            spaceBtn.addEventListener('click', function(){SendMorse(MorseInput.space)});
-
-            //Inputs the morse symbol and emits an event to others in the room so they can see the new symbol added
-            function SendMorse(inputType) {
-                inputMorse(inputType);
-                CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseInput:inputType, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-            }
-
             //Add events listeners for the reset of the text field
-            sendBtn.addEventListener('click', SendReset);
+            sendBtn.addEventListener('click', SendMessage);
             resetBtn.addEventListener('click', SendReset);
 
             //Emits an event to others in the room so everyone has their text field reset
             function SendReset() {
                 CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {resetRequest:true, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                ResetMessage();
             }
 
-            //Add an event listeners to send the morse message
-            sendBtn.addEventListener('click', SendMessage);
-
-            //If the message is not null
-            //Start playing the message
-            //Sends the message to other users in the same world
-            //Sends the message to other users in the specified other world
             function SendMessage() {
                 //If the text field is not null
-                if (CONTEXT_AF.textField.getAttribute('circles-interactive-visible') == true) {
-                    //Reset text field
-                    CONTEXT_AF.textField.setAttribute('circles-interactive-visible', false);
+                if (CONTEXT_AF.celInptDisplay.getAttribute('circles-interactive-visible') == true) {
     
                     //Save the message in the text field
-                    let message = CONTEXT_AF.textField.getAttribute('circles-label').text;
+                    let message = CONTEXT_AF.celInptDisplay.getAttribute('circles-label').text;
                     //console.log(message);
                     //Emit the message to other users in the same world
-                    CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {cellMessage:message, role:'Sender', resetRequest:true, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
 
                     //Emit the message to users in the specified other world
                     if (CIRCLES.getCirclesWorldName() === CONTEXT_AF.World1Name) {
-                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CONTEXT_AF.Group2Name, world:CONTEXT_AF.World2Name});
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {cellMessage:message, role:'Receiver', room:CONTEXT_AF.Group2Name, world:CONTEXT_AF.World2Name});
                     }
-                    else {
-                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CONTEXT_AF.Group1Name, world:CONTEXT_AF.World1Name});
+                    else if (CIRCLES.getCirclesWorldName() === CONTEXT_AF.World2Name) {
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {cellMessage:message, role:'Receiver', room:CONTEXT_AF.Group1Name, world:CONTEXT_AF.World1Name});
                     }
-    
-                    //Start playing the message
-                    CONTEXT_AF.StartMessagePlayback(message);
+
+                    ReceiveMessage("Sender", message);
                 }
+
+                ResetMessage();
             }
 
             //listen for when others sends a morse message
@@ -244,20 +287,8 @@ AFRAME.registerComponent('cell-interaction', {
                 //If the event emited is meant for current world
                 if (data.world === CIRCLES.getCirclesWorldName()) {
 
-                    //If the data has the morse input
-                    if (data.morseInput != null) {
-    
-                        inputMorse(data.morseInput);
-        
-                        //Play a sound effect based on the morse input
-                        switch(data.morseInput) {
-                            case MorseInput.dot:
-                                CONTEXT_AF.dot_sfx.components.sound.playSound();
-                                break;
-                            case MorseInput.dash:
-                                CONTEXT_AF.dash_sfx.components.sound.playSound();
-                                break;
-                        }
+                    if (data.cellInput != null) {
+                        inputCell(data.cellInput);
                     }
     
                     //If the data has the reset request
@@ -266,8 +297,8 @@ AFRAME.registerComponent('cell-interaction', {
                     }
     
                     //If the data has the full message
-                    if (data.morseMessage != null) {
-                        CONTEXT_AF.StartMessagePlayback(data.morseMessage);
+                    if (data.cellMessage != null) {
+                        ReceiveMessage(data.role, data.cellMessage);
                     }
                 }
             });
@@ -281,19 +312,42 @@ AFRAME.registerComponent('cell-interaction', {
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
                 //if the same world as the one requesting
                 if (data.world === CIRCLES.getCirclesWorldName()) {
-                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {curMorseMessage:CONTEXT_AF.textField.getAttribute('circles-label').text, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {curCellMessage:CONTEXT_AF.celInptDisplay.getAttribute('circles-label').text, senderMsg:CONTEXT_AF.senderMsg, receiverMsg:CONTEXT_AF.receiverMsg, lastInpt: CONTEXT_AF.lastInpt, curState: CONTEXT_AF.inptState, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 }
             });
 
             //receiving sync data from others (assuming all others is the same for now)
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
                 //make sure we are receiving data for this world
-                if (data.world === CIRCLES.getCirclesWorldName() && data.curMorseMessage != null) {
-                    CONTEXT_AF.textField.setAttribute('circles-label', {text: data.curMorseMessage});
-                    
-                    if (data.curMorseMessage != "" && data.curMorseMessage != "label_text") {
-                        CONTEXT_AF.textField.setAttribute('circles-interactive-visible', true);
-                    } 
+                if (data.world === CIRCLES.getCirclesWorldName()) {
+
+                    if (data.curCellMessage != null) {
+
+                        CONTEXT_AF.celInptDisplay.setAttribute('circles-label', {text: data.curCellMessage});
+                        
+                        if (data.curCellMessage != "" && data.curCellMessage != "label_text") {
+                            CONTEXT_AF.celInptDisplay.setAttribute('circles-interactive-visible', true);
+                        } 
+                    }
+
+                    if (data.lastInpt != null) {
+                        CONTEXT_AF.lastInpt = data.lastInpt;
+                    }
+
+                    if (data.curState != null) {
+                        CONTEXT_AF.inptState = data.curState;
+
+                        if (CONTEXT_AF.inptState == CellState.character) {
+                            DisplayCharSelection(CONTEXT_AF.lastInpt);
+                        }
+                    }
+
+                    if (data.senderMsg != "") {
+                        ReceiveMessage("Sender", data.senderMsg);
+                    }
+                    if (data.receiverMsg != "") {
+                        ReceiveMessage("Receiver", data.receiverMsg);
+                    }
                 }
             });
         };
@@ -308,87 +362,6 @@ AFRAME.registerComponent('cell-interaction', {
                 CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
             };
             CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
-        }
-    },
-    update() {},
-
-    //Used to play the morse message
-    tick: function (time, timeDelta) {
-        const CONTEXT_AF = this;
-
-        //If there is a message to play
-        if (CONTEXT_AF.playbackMessg != "") {
-            //Add the time that has elapsed since the last tick
-            CONTEXT_AF.timeElapsed += timeDelta / 1000;
-
-            //If enough time has elapsed since the last symbol was played
-            if (CONTEXT_AF.timeElapsed > CONTEXT_AF.delay) {
-                CONTEXT_AF.timeElapsed = 0;
-
-                //Sets the delay and plays the sound based on the next symbol to play
-                //For the "." and "-" the light will also turn on. The light will turn off with sound-ended event listener
-                switch(CONTEXT_AF.playbackMessg[0]) {
-                    case '.':
-                        CONTEXT_AF.dot_sfx.components.sound.playSound();
-                        CONTEXT_AF.delay = MorseDelay.dot;
-                        CONTEXT_AF.ToggleLight(true);
-                        //console.log('dot');
-                        break;
-                    case '-':
-                        CONTEXT_AF.dash_sfx.components.sound.playSound();
-                        CONTEXT_AF.delay = MorseDelay.dash;
-                        CONTEXT_AF.ToggleLight(true);
-                        //console.log('dash');
-                        break;
-                    case '/':
-                        CONTEXT_AF.delay = MorseDelay.space;
-                        //console.log('space');
-                        break;
-                }
-
-                //Removes the first character of the string
-                CONTEXT_AF.playbackMessg = CONTEXT_AF.playbackMessg.slice(1);
-
-                //If the full message was played return the telegraph functionality
-                if (CONTEXT_AF.playbackMessg == "") {
-                    CONTEXT_AF.telegraphElements.setAttribute('circles-interactive-visible', 'true');
-                }
-            }
-        }
-    },
-
-    //Starts playing the message
-    StartMessagePlayback: function(message) {
-        const CONTEXT_AF = this;
-
-        //Save the message to start playing it
-        CONTEXT_AF.playbackMessg = message;
-
-        CONTEXT_AF.delay = MorseDelay.space;
-
-        // switch(message[0]) {
-        //     case '.':
-        //         CONTEXT_AF.delay = MorseDelay.dot;
-        //         //console.log('dot');
-        //         break;
-        //     case '-':
-        //         CONTEXT_AF.delay = MorseDelay.dash;
-        //         //console.log('dash');
-        //         break;
-        // }
-
-        //disables the telegraph UI elements while playing the message
-        CONTEXT_AF.telegraphElements.setAttribute('circles-interactive-visible', 'false');
-    },
-
-    //Turn On and Off the light
-    ToggleLight: function(state) {
-        const CONTEXT_AF = this;
-        if (state == true) {
-            CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:1});
-        }
-        else if (state == false) {
-            CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:0});
         }
     },
     
