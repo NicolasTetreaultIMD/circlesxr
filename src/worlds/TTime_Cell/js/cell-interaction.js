@@ -181,7 +181,7 @@ AFRAME.registerComponent('cell-interaction', {
                 CONTEXT_AF.inptState = CellState.character;
             }
 
-            else if (CONTEXT_AF.inptState == CellState.character || inputBtn == 0) {
+            else if (CONTEXT_AF.inptState == CellState.character || (inputBtn == 0 && CONTEXT_AF.inptState == CellState.subset)) {
 
                 //Current message string before adding anything
                 let textField = CONTEXT_AF.celInptDisplay.getAttribute('circles-label').text;
