@@ -47,6 +47,20 @@ AFRAME.registerComponent('rotary-interaction', {
         
         CONTEXT_AF.rotaryElements = rotaryElements;
 
+        //Sound elements
+        CONTEXT_AF.rotary_sfx = document.createElement('a-entity');
+        CONTEXT_AF.rotary_sfx.setAttribute('sound', {src:'#rotary_sfx'});
+
+        CONTEXT_AF.error_sfx = document.createElement('a-entity');
+        CONTEXT_AF.error_sfx.setAttribute('sound', {src:'#error_sfx'});
+
+        CONTEXT_AF.pickup_sfx = document.createElement('a-entity');
+        CONTEXT_AF.pickup_sfx.setAttribute('sound', {src:'#pickup_sfx'});
+
+        rotaryElements.appendChild(CONTEXT_AF.rotary_sfx);
+        rotaryElements.appendChild(CONTEXT_AF.error_sfx);
+        rotaryElements.appendChild(CONTEXT_AF.pickup_sfx);
+
         //Clear Button
 
         let comsBtnGrp = document.createElement('a-entity');
@@ -87,7 +101,7 @@ AFRAME.registerComponent('rotary-interaction', {
             rotaryBtn.setAttribute('rotation', {x:90,y:0,z:0});
             rotaryBtn.setAttribute('position', {x:CONTEXT_AF.data.offset,y:0,z:0});
             rotaryBtn.setAttribute('scale', {x:CONTEXT_AF.data.scale, y:CONTEXT_AF.data.scale, z:CONTEXT_AF.data.scale});
-            rotaryBtn.setAttribute('circles-interactive-object', {type:'highlight'});
+            rotaryBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#rotary_sfx'});
             rotaryBtn.addEventListener('click', function(){CONTEXT_AF.ReceiveInput(i)});
 
             CONTEXT_AF.rotaryBtns.push(rotaryBtn);
@@ -151,12 +165,15 @@ AFRAME.registerComponent('rotary-interaction', {
                 }
                 else {
                     console.log("INCORRECT!");
+                    CONTEXT_AF.error_sfx.components.sound.playSound();
                     CONTEXT_AF.ResetText();
                 }
             }
         }
 
         CONTEXT_AF.CreateConnection = function() {
+            CONTEXT_AF.pickup_sfx.components.sound.playSound();
+
             CONTEXT_AF.codeInputed = true;
             CONTEXT_AF.rotaryElements.setAttribute('circles-interactive-visible', false);
             CONTEXT_AF.textField.setAttribute('circles-label', {text: "You are now allowed to talk with the other team"});
