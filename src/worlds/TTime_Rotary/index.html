@@ -30,10 +30,11 @@
     </a-assets>
 
     <circles-manager-avatar/>
-    
 
-    <a-entity rotary-interaction="enabled:true" position="0 1 -1">
-      <a-entity id="rotary-wheel" gltf-model="#rotaryDial-gltf"></a-entity>
+    <a-entity rotary-interaction="enabled:true;offset:0.23;angledif:33;startangle:36;code:2819" position="0 1 -1">
+      <a-entity id="rotary-wheel">
+        <a-entity gltf-model="#rotaryDial-gltf" scale="30 30 30" rotation="-70 90 90"></a-entity>
+      </a-entity>
     </a-entity>
 
     <!-- <a-entity id="Hub-clear"
