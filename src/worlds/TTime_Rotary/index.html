@@ -14,14 +14,26 @@
   <a-scene circles_scene_properties>
     <a-assets>
       
+      <a-asset-item id="rotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
+
+      <!-- Source: "Rotary Phone Pick Up and Slam Down" - https://pixabay.com/sound-effects/rotary-phone-pick-up-and-slam-down-37543/-->
+      <audio id="pickup_sfx" src="assets/sounds/pickup_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+      <!-- Source: "Error" - https://pixabay.com/sound-effects/error-126627/-->
+      <audio id="error_sfx" src="assets/sounds/error.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+      <!-- Source: "rotary phone" - https://pixabay.com/sound-effects/rotary-phone-31815/-->
+      <audio id="rotary_sfx" src="assets/sounds/rotary_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
 
     <circles-manager-avatar/>
+    
 
     <a-entity rotary-interaction="enabled:true" position="0 1 -1">
-      <a-entity id="rotary-wheel" geometry="depth: 0.5; height: 0.5; width: 0.5"></a-entity>
+      <a-entity id="rotary-wheel" gltf-model="#rotaryDial-gltf"></a-entity>
     </a-entity>
 
     <!-- <a-entity id="Hub-clear"
