@@ -14,6 +14,21 @@
   <a-scene circles_scene_properties>
     <a-assets>
       <a-asset-item id="IngeniumCellRoom-gltf" src="assets/TelegraphRoom_Puzzle_CellPhone.glb"></a-asset-item>
+      <a-asset-item id="navmesh_gltf" src="assets/TelegraphRoom_Puzzle_CellPhone_NavMesh.glb"></a-asset-item>
+
+      <a-asset-item id="cellBtn0-gltf" src="assets/cellphone/space0_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn1-gltf" src="assets/cellphone/blank1_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn2-gltf" src="assets/cellphone/abc2_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn3-gltf" src="assets/cellphone/def3_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn4-gltf" src="assets/cellphone/ghi4_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn5-gltf" src="assets/cellphone/jkl5_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn6-gltf" src="assets/cellphone/mno6_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn7-gltf" src="assets/cellphone/pqrs7_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn8-gltf" src="assets/cellphone/tuv8_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn9-gltf" src="assets/cellphone/wxyz9_button.glb"></a-asset-item>
+
+      <a-asset-item id="cellBtnSND-gltf" src="assets/cellphone/SND_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtnCLR-gltf" src="assets/cellphone/CLR_button.glb"></a-asset-item>
 
       <img id="microtac" src="assets/Cellphone Poster 1.png">
       <img id="martincooper" src="assets/Cellphone Poster 2.png">
@@ -32,7 +47,9 @@
     <circles-manager-avatar/>
 
     <a-entity cell-interaction="" position="0 1 -1" geometry="depth: 0.5; height: 0.5; width: 0.5"></a-entity>
-    <a-entity id = "cellRoom" gltf-model="#IngeniumCellRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+    <a-entity id = "cellRoom" gltf-model="#IngeniumCellRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+    </a-entity>
 
     <!-- LIGHTS ROW 1-->
     <a-entity rotation="0 90 0" position="-0.7 0 0.08894">
@@ -109,12 +126,12 @@
                   material="src:#martincooper; side:double;"></a-entity>
                   </a-entity>
 
-    <!-- <a-entity id="Hub-clear"
+    <a-entity id="Hub-clear"
                   position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
-                  circles-portal="img_src:assets/HubRoom_Preview.png; title_text:Return to Hub; link_url:/w/TTime_Hub?group=explore"
+                  circles-portal="img_src:assets/TTime_Hub_Preview.png; title_text:Return to Hub; link_url:/w/TTime_Hub?group=explore"
                   shadow end-level="curRoom:2"></a-entity>
 
-    <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -1.089"></a-entity>
+    <!-- <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -1.089"></a-entity>
     <a-entity circles-checkpoint circles-spawnpoint position="1.800 0.05 0.742"></a-entity>
     <a-entity circles-checkpoint circles-spawnpoint position="-2.515 0.05 1.913"></a-entity>
     <a-entity circles-checkpoint circles-spawnpoint position="-2.119 0.05 -1.235"></a-entity> -->

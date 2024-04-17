@@ -14,6 +14,7 @@
   <a-scene circles_scene_properties>
     <a-assets>
       <a-asset-item id="IngeniumRotaryRoom-gltf" src="assets/TelegraphRoom_Puzzle_RotaryPhone.glb"></a-asset-item>
+      <a-asset-item id="navmesh_gltf" src="assets/TelegraphRoom_Puzzle_NavMesh.glb"></a-asset-item>
 
       <a-asset-item id="IngeniumRotaryMain-gltf" src="assets/mainrotarydialpiece.glb"></a-asset-item>
       <a-asset-item id="IngeniumRotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
@@ -55,7 +56,9 @@
       </a-entity>
     </a-entity>
 
-    <a-entity id = "rotaryRoom" gltf-model="#IngeniumRotaryRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+    <a-entity id = "rotaryRoom" gltf-model="#IngeniumRotaryRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+    </a-entity>
 
     <!-- LIGHTS ROW 1-->
     <a-entity rotation="0 90 0" position="-0.7 0 0.08894">
@@ -207,15 +210,19 @@
                 material="src:#News3; side:double;"></a-entity>
                 </a-entity>
 
-    <!-- <a-entity id="Hub-clear"
+    <a-entity id="Hub-clear"
                   position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
-                  circles-portal="img_src:assets/HubRoom_Preview.png; title_text:Return to Hub; link_url:/w/TTime_HubTel?group=explore"
+                  circles-portal="img_src:assets/TTime_Hub_Preview.png; title_text:Return to Hub; link_url:/w/TTime_Hub?group=explore"
                   shadow end-level="curRoom:1"></a-entity>
 
-    <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -1.089"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="1.800 0.05 0.742"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-2.515 0.05 1.913"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-2.119 0.05 -1.235"></a-entity> -->
+
+    <a-entity circles-checkpoint circles-spawnpoint position="-0.483 0.050 -1.572"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="1.614 0.050 -0.256"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="0.960 0.050 2.024"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="-1.892 0.05 0.965"></a-entity>
+
+
+    <a-entity circles-checkpoint circles-spawnpoint position="-2.119 0.05 -1.235"></a-entity> 
 
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
   </a-scene>
