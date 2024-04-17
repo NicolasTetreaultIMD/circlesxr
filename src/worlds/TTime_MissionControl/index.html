@@ -36,6 +36,8 @@
       <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
       <img id="morseCode" src="assets/textures/morseCode.jpg">
 
+      <img id="texting" src="assets/Cellphone Poster 3.png">
+
       <!-- Source: "Rotary Phone Pick Up and Slam Down" - https://pixabay.com/sound-effects/rotary-phone-pick-up-and-slam-down-37543/-->
       <audio id="pickup_sfx" src="assets/sounds/pickup_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
 
@@ -146,7 +148,21 @@
     </a-entity>
 
     <a-entity id="cell-container" circles-interactive-visible="false">
-
+      <a-entity id="poster2Parent" position ="2.244 1.511 3.780" rotation="0 90 0">            
+        <a-entity id="poster2"
+                    position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                    shadow="receive:false; cast:false;"
+                    circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                      origScale:1 1 1; origRotation:0 0 0;
+                                      label_offset:0 2.2 0; arrow_position:down;
+                                      title:''; 
+                                      description:;
+                                      description_on: false;
+                                      label_text:The Future of Communication;
+                                      label_on:false;"
+                    geometry="primitive:box; width:0.01; height:1.5;"
+                    material="src:#texting; side:double;"></a-entity>
+                    </a-entity>
     </a-entity>
 
     <!-- <a-entity id="passwordText" position="-0.303 1.181 3.693" rotation="0 180 0" text="width:4;align:center;color:white;letterSpacing:30"></a-entity> -->
