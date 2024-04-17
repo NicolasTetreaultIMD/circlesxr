@@ -13,6 +13,24 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
+      <a-asset-item id="IngeniumRotaryRoom-gltf" src="assets/TelegraphRoom_Puzzle_RotaryPhone.glb"></a-asset-item>
+
+      <a-asset-item id="IngeniumRotary-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
+
+      <img id="Athens" src="assets/Athens-Greece.png">
+      <img id="Beijing" src="assets/Beijing-China.png">
+      <img id="Berlin" src="assets/Berlin-Germany.png">
+      <img id="Cairo" src="assets/Cairo-Egypt.png">
+      <img id="Melbourne" src="assets/Melbourne-Australia.png">
+      <img id="NewDelhi" src="assets/NewDelhi-India.png">
+      <img id="Ottawa" src="assets/Ottawa-Canada.png">
+      <img id="Reykjavik" src="assets/Reykjavik-Iceland.png">
+      <img id="Tokyo" src="assets/Tokyo-Japan.png">
+      <img id="Stocks" src="assets/stocks.png">
+
+      <img id="News1" src="assets/4-Cities.png">
+      <img id="News2" src="assets/Almon B. Strowger.png">
+      <img id="News3" src="assets/Rotary Phone.png">
       
       <a-asset-item id="rotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
 
@@ -36,6 +54,158 @@
         <a-entity gltf-model="#rotaryDial-gltf" scale="30 30 30" rotation="-70 90 90"></a-entity>
       </a-entity>
     </a-entity>
+
+    <a-entity id = "rotaryRoom" gltf-model="#IngeniumRotaryRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+
+    <!-- LIGHTS ROW 1-->
+    <a-entity rotation="0 90 0" position="-0.7 0 0.08894">
+      <a-entity geometry="" position="-2.37855 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="-0.2039 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="1.93308 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+  
+      <a-entity geometry="primitive: plane" position="-2.37855 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="-0.2039 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="1.93308 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <!-- LIGHTS ROW 2 -->
+    <a-entity rotation="0 90 0" position="3 0 0.08894">
+      <a-entity geometry="" position="-2.37855 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="-0.2039 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="1.93308 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+
+      <a-entity geometry="primitive: plane" position="-2.37855 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="-0.2039 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="1.93308 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <a-entity light="type: ambient; intensity: 3; color: e0fffe;"></a-entity>
+    <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #949494" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
+    <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #949494" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
+
+    <!-- CLOCKS -->
+    <a-entity id ="OttawaClock">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="-2.2 2.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Ottawa"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="-2.2 2.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="-2.2 2.63103 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__ottawa="align: center; value: OTTAWA; wrapCount: 16" position="-2.2 2.63215 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="BerlinClock">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="-1.35 2.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Berlin"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="-1.35 2.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="-1.35 2.63103 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__berlin="align: center; value: BERLIN; wrapCount: 16" position="-1.35 2.63215 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="AthensClock">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="-0.5 2.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Athens"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="-0.5 2.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="-0.5 2.63103 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__athens="align: center; value: ATHENS; wrapCount: 16" position="-0.5 2.63215 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="CairoClock">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="0.35 2.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Cairo"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="0.35 2.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="0.35 2.63103 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__cairo="align: center; value: CAIRO; wrapCount: 16" position="0.35 2.63215 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="ReykjavikClock">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="1.2 2.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Reykjavik"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="1.2 2.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="1.2 2.63103 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__reykjavik="align: center; value: REYKJAVIK; wrapCount: 16" position="1.2 2.63215 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="NewDelhi">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="-1.775 1.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #NewDelhi"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="-1.775 1.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="-1.775 1.637 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__newdelhi="align: center; value: NEW DELHI; wrapCount: 16" position="-1.775 1.637 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="Beijing">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="-0.925 1.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Beijing"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="-0.925 1.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="-0.925 1.637 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__beijing="align: center; value: BEIJING; wrapCount: 16" position="-0.925 1.637 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="Melbourne">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="-0.075 1.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Melbourne"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="-0.075 1.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="-0.075 1.637 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__melbourne="align: center; value: MELBOURNE; wrapCount: 16" position="-0.075 1.637 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity id ="Tokyo">
+      <a-entity geometry="primitive: cylinder; height: 0.1; radius: 0.4" position="0.775 1.2 -3.235" rotation="0 90 90" scale = "0.75 0.75 0.75" material="src: #Tokyo"></a-entity>
+      <a-entity geometry="primitive: torus; radius: 0.3; segmentsRadial: 33; radiusTubular: 0.01" position="0.775 1.2 -3.235" rotation="0 0 90" scale="1 1 3" material="color: #000000"></a-entity>
+
+      <a-entity position="0.775 1.637 -3.21946" geometry="depth: 0.1; height: 0.16" material="color: #212121" scale="0.75 1 1"></a-entity>
+      <a-entity text__tokyo="align: center; value: TOKYO; wrapCount: 16" position="0.775 1.637 -3.16152"></a-entity>
+    </a-entity>
+
+    <a-entity geometry="depth: 0.11; height: 1.1" position="-3.881 1.72 0.665" rotation="0 90 0" material="color: #000000" scale="1.84 1.21 0.48"></a-entity>
+    <a-entity position="-3.848 1.725 0.663" geometry="primitive: plane; height: 1.26; width: 1.75" material="src:#Stocks" rotation="0 90 0"></a-entity>
+
+    <a-entity id="poster1Parent" position ="1.1 1.43 3.76" rotation="0 90 0">
+    <a-entity id="poster1"
+                position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:;
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#News1; side:double;"></a-entity>
+                </a-entity>
+
+    <a-entity id="poster2Parent" position ="-2.72 1.615 3.76" rotation="0 90 0">            
+    <a-entity id="poster2"
+                position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:;
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#News2; side:double;"></a-entity>
+                </a-entity>
+
+    <a-entity id="poster3Parent" position ="3.157 2.2 1.145" rotation="0 0 0">
+    <a-entity id="poster3"
+                position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:;
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#News3; side:double;"></a-entity>
+                </a-entity>
 
     <!-- <a-entity id="Hub-clear"
                   position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
