@@ -4,6 +4,7 @@
   <circles-start-scripts/>
 
   <script src="js/telegraph-interaction.js"></script>
+  <script src="js/rotary-interaction.js"></script>
   <script src="js/number-lock.js"></script>
   <script src="js/end-level.js"></script>
   <script src="js/load-puzzles.js"></script>
@@ -15,6 +16,9 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
+
+      <a-asset-item id="IngeniumRotaryMain-gltf" src="assets/mainrotarydialpiece.glb"></a-asset-item>
+      <a-asset-item id="IngeniumRotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
 
       <a-asset-item id="lightBase-gltf" src="assets/LightBulb_Base.glb"></a-asset-item>
       <a-asset-item id="lightTop-gltf" src="assets/LightBulb_Top.glb"></a-asset-item>
@@ -31,6 +35,15 @@
       <img id="dashbtn_texture" src="assets/textures/dashBtn.png" crossorigin="anonymous">
       <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
       <img id="morseCode" src="assets/textures/morseCode.jpg">
+
+      <!-- Source: "Rotary Phone Pick Up and Slam Down" - https://pixabay.com/sound-effects/rotary-phone-pick-up-and-slam-down-37543/-->
+      <audio id="pickup_sfx" src="assets/sounds/pickup_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+      <!-- Source: "Error" - https://pixabay.com/sound-effects/error-126627/-->
+      <audio id="error_sfx" src="assets/sounds/error.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+      <!-- Source: "rotary phone" - https://pixabay.com/sound-effects/rotary-phone-31815/-->
+      <audio id="rotary_sfx" src="assets/sounds/rotary_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
 
       <!-- Source: "Switch Light 04" - https://pixabay.com/sound-effects/switch-light-04-82204/-->
       <audio id="dial_sfx" src="assets/sounds/dial_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -123,6 +136,12 @@
     </a-entity>
 
     <a-entity id="rotary-container" circles-interactive-visible="false">
+      <a-entity id="rotary-artefact" rotary-interaction="enabled:false;offset:0.23;angledif:33;startangle:36;" scale="0.382 0.382 0.382" position="1.014 0.782 3.359" rotation="0 -167.017 0">
+        <a-entity gltf-model="#IngeniumRotaryMain-gltf" scale="30 30 30" rotation="0 180 0" position="-0.19 0 0"></a-entity>
+        <a-entity id="rotary-wheel" rotation="-50 0 0" position="0 0 0.305">
+          <a-entity gltf-model="#IngeniumRotaryDial-gltf" scale="30 30 30" rotation="-70 90 90"></a-entity>
+        </a-entity>
+      </a-entity>
 
     </a-entity>
 

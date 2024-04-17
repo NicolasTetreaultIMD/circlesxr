@@ -188,6 +188,7 @@ AFRAME.registerComponent('rotary-interaction', {
 
             CONTEXT_AF.codeInputed = true;
             CONTEXT_AF.rotaryElements.setAttribute('circles-interactive-visible', false);
+            CONTEXT_AF.textField.setAttribute('circles-interactive-visible', true);
             CONTEXT_AF.textField.setAttribute('circles-label', {text: "You are now\n allowed to talk\n with the other team"});
         }
 
