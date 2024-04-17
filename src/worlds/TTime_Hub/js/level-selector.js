@@ -11,14 +11,14 @@ function UpdatePortals() {
         case Artefacts.telegraph:
             document.querySelector('#currentArtefactTxt').setAttribute('text', {value:'Currently Targeted Artefact:\n\n Telegraph'});
 
-            document.querySelector('#TimeTraveler-Group').setAttribute('circles-portal', {link_url:"/w/TTime_Telegraph?group=timeTraveler&hub_state=" + hubStateStr});
+            document.querySelector('#TimeTraveler-Group').setAttribute('circles-portal', {img_src:'assets/TTime_Telegraph_Preview.png', link_url:"/w/TTime_Telegraph?group=timeTraveler&hub_state=" + hubStateStr});
             document.querySelector('#MissionControl-Group').setAttribute('circles-portal', {link_url:"/w/TTime_MissionControl?group=missionControl&artefact=telegraph&hub_state=" + hubStateStr});
             break;
         
         case Artefacts.rotary:
             document.querySelector('#currentArtefactTxt').setAttribute('text', {value:'Currently Targeted Artefact:\n\n Rotary Phone'});
 
-            document.querySelector('#TimeTraveler-Group').setAttribute('circles-portal', {link_url:"/w/TTime_Rotary?group=timeTraveler&hub_state=" + hubStateStr});
+            document.querySelector('#TimeTraveler-Group').setAttribute('circles-portal', {img_src:'assets/TTime_Rotary_Preview.png', link_url:"/w/TTime_Rotary?group=timeTraveler&hub_state=" + hubStateStr});
             document.querySelector('#MissionControl-Group').setAttribute('circles-portal', {link_url:"/w/TTime_MissionControl?group=missionControl&artefact=rotary&hub_state=" + hubStateStr});
             break;
         
