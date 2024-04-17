@@ -31,8 +31,17 @@ AFRAME.registerComponent('cell-interaction', {
         
         CONTEXT_AF.cellElements = cellElements;
 
-        //Morse Display
-        //Is there a way to change the size of the text?
+        //Sound elements
+        CONTEXT_AF.btnPress_sfx = document.createElement('a-entity');
+        CONTEXT_AF.btnPress_sfx.setAttribute('sound', {src:'#btnPress_sfx'});
+
+        CONTEXT_AF.textNotif_sfx = document.createElement('a-entity');
+        CONTEXT_AF.textNotif_sfx.setAttribute('sound', {src:'#textNotif_sfx'});
+
+        cellElements.appendChild(CONTEXT_AF.btnPress_sfx);
+        cellElements.appendChild(CONTEXT_AF.textNotif_sfx);
+
+        //Cell Display
         let celInptDisplay = document.createElement('a-entity');
         celInptDisplay.setAttribute('id','celInptDisplay');
         celInptDisplay.setAttribute('circles-label', {text:'', arrow_visible:false, offset:'0 1 0'});
@@ -94,8 +103,8 @@ AFRAME.registerComponent('cell-interaction', {
                 numBtn.setAttribute('id', 'numBtn0');
                 numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
                 numBtn.setAttribute('position', {x:0,y:0,z:-0.15 * x});
-                numBtn.setAttribute('circles-interactive-object', {type:'highlight'});
-                numBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+                numBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
+                numBtn.setAttribute('animation__btnclick', {property:'position',from:'0 0.01 ' + (-0.15 * x),to:'0 0 ' + (-0.15 * x),dur:200,startEvents:'click'});
                 numBtn.addEventListener('click', function() {receiveInpt(0);});
                 comsBtnGrp.appendChild(numBtn);
             }
@@ -107,8 +116,8 @@ AFRAME.registerComponent('cell-interaction', {
                     numBtn.setAttribute('id', 'numBtn' + ((x*3) + y + 1));
                     numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
                     numBtn.setAttribute('position', {x:-0.15 + (0.15 * y),y:0,z:-0.15 * x});
-                    numBtn.setAttribute('circles-interactive-object', {type:'highlight'});
-                    numBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+                    numBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
+                    numBtn.setAttribute('animation__btnclick', {property:'position',from: (-0.15 + (0.15 * y)) + ' 0.01 ' + (-0.15 * x),to:(-0.15 + (0.15 * y)) + ' 0 ' + (-0.15 * x),dur:200,startEvents:'click'});
                     numBtn.addEventListener('click', function() {receiveInpt((x*3) + y + 1);});
     
                     comsBtnGrp.appendChild(numBtn);
@@ -122,16 +131,16 @@ AFRAME.registerComponent('cell-interaction', {
         sendBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
         sendBtn.setAttribute('material', {color:'red'});
         sendBtn.setAttribute('position', {x:0.15,y:0,z:-0.15 * 4});
-        sendBtn.setAttribute('circles-interactive-object', {type:'highlight'});
-        sendBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+        sendBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
+        sendBtn.setAttribute('animation__btnclick', {property:'position',from:'0.15 0.01 ' + (-0.15 * 4),to:'0.15 0 ' + (-0.15 * 4),dur:200,startEvents:'click'});
 
         let resetBtn = document.createElement('a-entity');
         resetBtn.setAttribute('id', 'resetBtn');
         resetBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
         resetBtn.setAttribute('material', {color:'white'});
         resetBtn.setAttribute('position', {x:0,y:0,z:-0.15 * 4});
-        resetBtn.setAttribute('circles-interactive-object', {type:'highlight'});
-        resetBtn.setAttribute('animation__btnclick', {property:'scale',from:'0.95 0.95 0.95',to:'1.08 1.08 1.08',dur:200,startEvents:'click'});
+        resetBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
+        resetBtn.setAttribute('animation__btnclick', {property:'position',from:'0 0.01 ' + (-0.15 * 4),to:'0 0 ' + (-0.15 * 4),dur:200,startEvents:'click'});
 
         comsBtnGrp.appendChild(sendBtn);
         comsBtnGrp.appendChild(resetBtn);
@@ -172,7 +181,7 @@ AFRAME.registerComponent('cell-interaction', {
                 CONTEXT_AF.inptState = CellState.character;
             }
 
-            else if (CONTEXT_AF.inptState == CellState.character || inputBtn == 0) {
+            else if (CONTEXT_AF.inptState == CellState.character || (inputBtn == 0 && CONTEXT_AF.inptState == CellState.subset)) {
 
                 //Current message string before adding anything
                 let textField = CONTEXT_AF.celInptDisplay.getAttribute('circles-label').text;
@@ -218,6 +227,8 @@ AFRAME.registerComponent('cell-interaction', {
         }
 
         function ReceiveMessage(role, msg) {
+            CONTEXT_AF.textNotif_sfx.components.sound.playSound();
+
             if (role == "Sender") {
                 CONTEXT_AF.senderMsg = msg;
                 CONTEXT_AF.receiverMsg = "";
@@ -289,6 +300,7 @@ AFRAME.registerComponent('cell-interaction', {
 
                     if (data.cellInput != null) {
                         inputCell(data.cellInput);
+                        CONTEXT_AF.btnPress_sfx.components.sound.playSound();
                     }
     
                     //If the data has the reset request

@@ -2,7 +2,7 @@
 AFRAME.registerComponent('rotary-interaction', {
     schema: {
         offset:{type:'float', default:0.600},
-        amgledif:{type:'float', default:25},
+        angledif:{type:'float', default:25},
         startangle:{type:'float', default:45},
         scale:{type:'float', default:1},
         code:{type:'string', default:12345},
@@ -20,7 +20,7 @@ AFRAME.registerComponent('rotary-interaction', {
 
         //animations for rotary
         for (let i = 0; i < 10; i++) {
-            CONTEXT_AF.rotaryWheel.setAttribute('animation__rotateWheel' + i, {'property': 'rotation','from':{x:0, y:0, z:0}, 'to': {x: 0, y: 0, z: -(CONTEXT_AF.data.amgledif * (i + 1) + CONTEXT_AF.data.startangle)}, 'dur':1000, 'startEvents': 'startWheelAnim' + i, 'autoplay':false});
+            CONTEXT_AF.rotaryWheel.setAttribute('animation__rotateWheel' + i, {'property': 'rotation','from':{x:0, y:0, z:0}, 'to': {x: 0, y: 0, z: -(CONTEXT_AF.data.angledif * (i + 1) + CONTEXT_AF.data.startangle)}, 'dur':1000, 'startEvents': 'startWheelAnim' + i, 'autoplay':false});
         }
 
         CONTEXT_AF.rotaryWheel.setAttribute('animation__returnWheel', {'property': 'rotation', 'to':{x:0,y:0,z:0}, 'dur':1000, 'startEvents': 'animationcomplete__rotateWheel0,animationcomplete__rotateWheel1,animationcomplete__rotateWheel2,animationcomplete__rotateWheel3,animationcomplete__rotateWheel4,animationcomplete__rotateWheel5,animationcomplete__rotateWheel6,animationcomplete__rotateWheel7,animationcomplete__rotateWheel8,animationcomplete__rotateWheel9'});
@@ -46,6 +46,20 @@ AFRAME.registerComponent('rotary-interaction', {
         rotaryElements.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
         
         CONTEXT_AF.rotaryElements = rotaryElements;
+
+        //Sound elements
+        CONTEXT_AF.rotary_sfx = document.createElement('a-entity');
+        CONTEXT_AF.rotary_sfx.setAttribute('sound', {src:'#rotary_sfx'});
+
+        CONTEXT_AF.error_sfx = document.createElement('a-entity');
+        CONTEXT_AF.error_sfx.setAttribute('sound', {src:'#error_sfx'});
+
+        CONTEXT_AF.pickup_sfx = document.createElement('a-entity');
+        CONTEXT_AF.pickup_sfx.setAttribute('sound', {src:'#pickup_sfx'});
+
+        rotaryElements.appendChild(CONTEXT_AF.rotary_sfx);
+        rotaryElements.appendChild(CONTEXT_AF.error_sfx);
+        rotaryElements.appendChild(CONTEXT_AF.pickup_sfx);
 
         //Clear Button
 
@@ -79,16 +93,22 @@ AFRAME.registerComponent('rotary-interaction', {
 
         for (let i = 0; i < 10; i++) {
             let btnContainer = document.createElement('a-entity');
-            btnContainer.setAttribute('rotation', {x:0,y:0,z:CONTEXT_AF.data.amgledif * i + CONTEXT_AF.data.startangle});
+            btnContainer.setAttribute('rotation', {x:0,y:0,z:CONTEXT_AF.data.angledif * i + CONTEXT_AF.data.startangle});
 
             let rotaryBtn = document.createElement('a-entity');
             rotaryBtn.setAttribute('id', 'rotaryBtn' + i);
-            rotaryBtn.setAttribute('geometry', {primitive:'cylinder', height: 0.05, radius: 0.1});
+            rotaryBtn.setAttribute('geometry', {primitive:'cylinder', height: 0.05, radius: 0.06});
             rotaryBtn.setAttribute('rotation', {x:90,y:0,z:0});
+            rotaryBtn.setAttribute('material', {color:'white', opacity:0.1});
             rotaryBtn.setAttribute('position', {x:CONTEXT_AF.data.offset,y:0,z:0});
             rotaryBtn.setAttribute('scale', {x:CONTEXT_AF.data.scale, y:CONTEXT_AF.data.scale, z:CONTEXT_AF.data.scale});
-            rotaryBtn.setAttribute('circles-interactive-object', {type:'highlight'});
-            rotaryBtn.addEventListener('click', function(){CONTEXT_AF.ReceiveInput(i)});
+            rotaryBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#rotary_sfx'});
+
+            let dialValue = i + 1;
+            if (dialValue > 9) {
+                dialValue = 0;
+            }
+            rotaryBtn.addEventListener('click', function(){CONTEXT_AF.ReceiveInput(dialValue)});
 
             CONTEXT_AF.rotaryBtns.push(rotaryBtn);
 
@@ -111,7 +131,7 @@ AFRAME.registerComponent('rotary-interaction', {
 
             CONTEXT_AF.inputBtnGrp.setAttribute('circles-interactive-visible', 'false');
 
-            CONTEXT_AF.rotaryWheel.setAttribute('animation__rotateWheel' + val, {'property': 'rotation','from':{x:0, y:0, z:0}, 'to': {x: 0, y: 0, z: -(CONTEXT_AF.data.amgledif * (val + 1) + CONTEXT_AF.data.startangle)}, 'dur':1000, 'startEvents': 'startWheelAnim' + val, 'autoplay':false});
+            CONTEXT_AF.rotaryWheel.setAttribute('animation__rotateWheel' + val, {'property': 'rotation','from':{x:0, y:0, z:0}, 'to': {x: 0, y: 0, z: -(CONTEXT_AF.data.angledif * (val + 1) + CONTEXT_AF.data.startangle)}, 'dur':1000, 'startEvents': 'startWheelAnim' + val, 'autoplay':false});
             CONTEXT_AF.rotaryWheel.setAttribute('animation__returnWheel', {'property': 'rotation', 'to':{x:0,y:0,z:0}, 'dur':1000, 'startEvents': 'animationcomplete__rotateWheel0,animationcomplete__rotateWheel1,animationcomplete__rotateWheel2,animationcomplete__rotateWheel3,animationcomplete__rotateWheel4,animationcomplete__rotateWheel5,animationcomplete__rotateWheel6,animationcomplete__rotateWheel7,animationcomplete__rotateWheel8,animationcomplete__rotateWheel9'});
 
             CONTEXT_AF.rotaryWheel.emit('startWheelAnim' + val);
@@ -151,12 +171,15 @@ AFRAME.registerComponent('rotary-interaction', {
                 }
                 else {
                     console.log("INCORRECT!");
+                    CONTEXT_AF.error_sfx.components.sound.playSound();
                     CONTEXT_AF.ResetText();
                 }
             }
         }
 
         CONTEXT_AF.CreateConnection = function() {
+            CONTEXT_AF.pickup_sfx.components.sound.playSound();
+
             CONTEXT_AF.codeInputed = true;
             CONTEXT_AF.rotaryElements.setAttribute('circles-interactive-visible', false);
             CONTEXT_AF.textField.setAttribute('circles-label', {text: "You are now allowed to talk with the other team"});
@@ -198,6 +221,7 @@ AFRAME.registerComponent('rotary-interaction', {
                     //If the data has the morse input
                     if (data.rotaryInput != null) {
                         CONTEXT_AF.InputRotary(data.rotaryInput);
+                        CONTEXT_AF.rotary_sfx.components.sound.playSound();
                     }
     
                     //If the data has the reset request

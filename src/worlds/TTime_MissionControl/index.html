@@ -29,6 +29,12 @@
       <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
       <img id="morseCode" src="assets/textures/morseCode.jpg">
 
+      <!-- Source: "Switch Light 04" - https://pixabay.com/sound-effects/switch-light-04-82204/-->
+      <audio id="dial_sfx" src="assets/sounds/dial_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+      <!-- Source: "Minimal Pop Click UI 8" - https://pixabay.com/sound-effects/minimal-pop-click-ui-8-198308/-->
+      <audio id="btnPress_sfx" src="assets/sounds/btnPress_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+
       <!-- cretit: "SOS-MorseCode" Pixabay - https://pixabay.com/sound-effects/sos-morsecode-31731/-->
       <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
       <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -160,7 +166,7 @@
   document.addEventListener("openLid-emit", function() { 
     //console.log('OPEN LID');
     document.querySelector('#btnLid').setAttribute('animation', {property: 'rotation', from:'0 0 0', to:'120 0 0', dur:2000});
-    document.querySelector('#btn').setAttribute('circles-interactive-object', {enabled: true});
+    document.querySelector('#btn').setAttribute('circles-interactive-object', {enabled: true, click_sound:'#btnPress_sfx'});
   });
  </script>
 </html>
