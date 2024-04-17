@@ -29,17 +29,46 @@ AFRAME.registerComponent('telegraph-interaction', {
         //Creates the telegraph components
         
         //Light element
+        let lightContainer = document.createElement('a-entity');
+        lightContainer.setAttribute('position', {x:0.076,y:0,z:0.078});
+        lightContainer.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
+
+        let lightBase = document.createElement('a-entity');
+        lightBase.setAttribute('gltf-model', '#lightBase-gltf');
+
         CONTEXT_AF.morseLight = document.createElement('a-entity');
         CONTEXT_AF.morseLight.setAttribute('id', 'morseLight');
-        CONTEXT_AF.morseLight.setAttribute('position', {x:0.12,y:0,z:0.08});
-        CONTEXT_AF.morseLight.setAttribute('geometry', {primitive:'cylinder', height:0.3, radius:0.1});
-        CONTEXT_AF.morseLight.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
-        CONTEXT_AF.morseLight.setAttribute('material', {color:'#316934', emissive:'#00ff00', emissiveIntensity:0});
+        //CONTEXT_AF.morseLight.setAttribute('material', {color:'white', emissive:'#00ff00', emissiveIntensity:0});
+        CONTEXT_AF.morseLight.setAttribute('gltf-model', '#lightTop-gltf');
 
-        CONTEXT_AF.el.appendChild(CONTEXT_AF.morseLight);
+        CONTEXT_AF.morseLight.addEventListener('model-loaded', function () {
+            CONTEXT_AF.morseLightMesh = CONTEXT_AF.morseLight.getObject3D('mesh');
+
+            CONTEXT_AF.morseLightMesh.traverse((o) => {
+                if (o.isMesh) {
+                    CONTEXT_AF.emissiveOff = o.material.color;
+                    CONTEXT_AF.emissiveOn = new THREE.Color( 0x00ff00 );
+                }
+            });
+
+            CONTEXT_AF.morseLightMesh.traverse((o) => {
+                if (o.isMesh) {
+                    o.material.color = CONTEXT_AF.emissiveOff;
+                }
+            });
+            //CONTEXT_AF.morseLightMesh.material.emissive = new THREE.Color( 0x00ff00 );
+        });
+
+        //CONTEXT_AF.morseLight.setAttribute('position', {x:0.12,y:0,z:0.08});
+        //CONTEXT_AF.morseLight.setAttribute('geometry', {primitive:'cylinder', height:0.3, radius:0.1});
+        //CONTEXT_AF.morseLight.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
+
+        lightContainer.appendChild(lightBase);
+        lightContainer.appendChild(CONTEXT_AF.morseLight);
+        CONTEXT_AF.el.appendChild(lightContainer);
 
         //Container for the other elements that need to be toggle off
-        //console.log(CONTEXT_AF.data.scale);
+        console.log(CONTEXT_AF.data.scale);
 
         let telegraphElements = document.createElement('a-entity');
         telegraphElements.setAttribute('id', 'telegraphElements');
@@ -399,10 +428,21 @@ AFRAME.registerComponent('telegraph-interaction', {
     ToggleLight: function(state) {
         const CONTEXT_AF = this;
         if (state == true) {
-            CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:1});
+            CONTEXT_AF.morseLightMesh.traverse((o) => {
+                if (o.isMesh) {
+                    o.material.color = CONTEXT_AF.emissiveOn;
+                }
+            });
+            //CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:1});
         }
         else if (state == false) {
-            CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:0});
+            CONTEXT_AF.morseLightMesh.traverse((o) => {
+                if (o.isMesh) {
+                    o.material.color = CONTEXT_AF.emissiveOff;
+                }
+            });
+            
+            //CONTEXT_AF.morseLight.setAttribute('material', {emissiveIntensity:0});
         }
     },
     
