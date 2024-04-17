@@ -13,7 +13,11 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
-      
+      <a-asset-item id="IngeniumCellRoom-gltf" src="assets/TelegraphRoom_Puzzle_CellPhone.glb"></a-asset-item>
+
+      <img id="microtac" src="assets/Cellphone Poster 1.png">
+      <img id="martincooper" src="assets/Cellphone Poster 2.png">
+      <img id="texting" src="assets/Cellphone Poster 3.png">
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
@@ -21,6 +25,82 @@
     <circles-manager-avatar/>
 
     <a-entity cell-interaction="" position="0 1 -1" geometry="depth: 0.5; height: 0.5; width: 0.5"></a-entity>
+    <a-entity id = "cellRoom" gltf-model="#IngeniumCellRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+
+    <!-- LIGHTS ROW 1-->
+    <a-entity rotation="0 90 0" position="-0.7 0 0.08894">
+      <a-entity geometry="" position="-2.37855 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="-0.2039 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="1.93308 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+  
+      <a-entity geometry="primitive: plane" position="-2.37855 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="-0.2039 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="1.93308 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <!-- LIGHTS ROW 2 -->
+    <a-entity rotation="0 90 0" position="3 0 0.08894">
+      <a-entity geometry="" position="-2.37855 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="-0.2039 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+      <a-entity geometry="" position="1.93308 3.63506 -1.49611" rotation="90 90 0" scale="0.8 1.8 1" material="color: #292929"></a-entity>
+
+      <a-entity geometry="primitive: plane" position="-2.37855 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="-0.2039 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+      <a-entity geometry="primitive: plane" position="1.93308 3.13268 -1.49611" rotation="90 90 0" scale="0.75 1.75 1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
+    </a-entity>
+
+    <a-entity light="type: ambient; intensity: 1.5; color: #bfbfbf;"></a-entity>
+    <a-entity light="intensity: 9; castShadow: true; decay: 0.3; type: spot; color: #adadad" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
+    <a-entity light="intensity: 4.570; castShadow: true; type: spot; decay: 0.3; color: #c2c2c2" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
+
+    <!-- POSTERS -->
+    <a-entity id="poster1Parent" position ="-3.856 1.7 1.625" rotation="0 0 0">
+      <a-entity id="poster1"
+                  position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                  shadow="receive:false; cast:false;"
+                  circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                    origScale:1 1 1; origRotation:0 0 0;
+                                    label_offset:0 2.2 0; arrow_position:down;
+                                    title:''; 
+                                    description:;
+                                    description_on: false;
+                                    label_text:The Future of Communication;
+                                    label_on:false;"
+                  geometry="primitive:box; width:0.01; height:1.5;"
+                  material="src:#microtac; side:double;"></a-entity>
+                  </a-entity>
+  
+      <a-entity id="poster2Parent" position ="-0.28 1.965 -3.195" rotation="0 90 0">            
+      <a-entity id="poster2"
+                  position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                  shadow="receive:false; cast:false;"
+                  circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                    origScale:1 1 1; origRotation:0 0 0;
+                                    label_offset:0 2.2 0; arrow_position:down;
+                                    title:''; 
+                                    description:;
+                                    description_on: false;
+                                    label_text:The Future of Communication;
+                                    label_on:false;"
+                  geometry="primitive:box; width:0.01; height:1.5;"
+                  material="src:#texting; side:double;"></a-entity>
+                  </a-entity>
+  
+      <a-entity id="poster3Parent" position ="3.157 1.75 -1.645" rotation="0 0 0">
+      <a-entity id="poster3"
+                  position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                  shadow="receive:false; cast:false;"
+                  circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                    origScale:1 1 1; origRotation:0 0 0;
+                                    label_offset:0 2.2 0; arrow_position:down;
+                                    title:''; 
+                                    description:;
+                                    description_on: false;
+                                    label_text:The Future of Communication;
+                                    label_on:false;"
+                  geometry="primitive:box; width:0.01; height:1.5;"
+                  material="src:#martincooper; side:double;"></a-entity>
+                  </a-entity>
 
     <!-- <a-entity id="Hub-clear"
                   position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
