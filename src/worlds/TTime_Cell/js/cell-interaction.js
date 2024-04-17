@@ -101,7 +101,9 @@ AFRAME.registerComponent('cell-interaction', {
             if (x == 3) {
                 let numBtn = document.createElement('a-entity');
                 numBtn.setAttribute('id', 'numBtn0');
-                numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
+                numBtn.setAttribute('gltf-model', '#cellBtn'+ 0 +'-gltf');
+                numBtn.setAttribute('scale', {x:30, y:30, z:30});
+                //numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
                 numBtn.setAttribute('position', {x:0,y:0,z:-0.15 * x});
                 numBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
                 numBtn.setAttribute('animation__btnclick', {property:'position',from:'0 0.01 ' + (-0.15 * x),to:'0 0 ' + (-0.15 * x),dur:200,startEvents:'click'});
@@ -114,7 +116,9 @@ AFRAME.registerComponent('cell-interaction', {
                 for (let y = 0; y < 3; y++) {
                     let numBtn = document.createElement('a-entity');
                     numBtn.setAttribute('id', 'numBtn' + ((x*3) + y + 1));
-                    numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
+                    numBtn.setAttribute('gltf-model', '#cellBtn'+ ((x*3) + y + 1) +'-gltf');
+                    numBtn.setAttribute('scale', {x:30, y:30, z:30});
+                    //numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
                     numBtn.setAttribute('position', {x:-0.15 + (0.15 * y),y:0,z:-0.15 * x});
                     numBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
                     numBtn.setAttribute('animation__btnclick', {property:'position',from: (-0.15 + (0.15 * y)) + ' 0.01 ' + (-0.15 * x),to:(-0.15 + (0.15 * y)) + ' 0 ' + (-0.15 * x),dur:200,startEvents:'click'});
@@ -128,16 +132,20 @@ AFRAME.registerComponent('cell-interaction', {
 
         let sendBtn = document.createElement('a-entity');
         sendBtn.setAttribute('id', 'sendBtn');
-        sendBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
-        sendBtn.setAttribute('material', {color:'red'});
+        sendBtn.setAttribute('gltf-model', '#cellBtnSND-gltf');
+        sendBtn.setAttribute('scale', {x:30, y:30, z:30});
+        //sendBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
+        //sendBtn.setAttribute('material', {color:'red'});
         sendBtn.setAttribute('position', {x:0.15,y:0,z:-0.15 * 4});
         sendBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
         sendBtn.setAttribute('animation__btnclick', {property:'position',from:'0.15 0.01 ' + (-0.15 * 4),to:'0.15 0 ' + (-0.15 * 4),dur:200,startEvents:'click'});
 
         let resetBtn = document.createElement('a-entity');
         resetBtn.setAttribute('id', 'resetBtn');
-        resetBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
-        resetBtn.setAttribute('material', {color:'white'});
+        resetBtn.setAttribute('gltf-model', '#cellBtnCLR-gltf');
+        resetBtn.setAttribute('scale', {x:30, y:30, z:30});
+        //resetBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
+        //.setAttribute('material', {color:'white'});
         resetBtn.setAttribute('position', {x:0,y:0,z:-0.15 * 4});
         resetBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
         resetBtn.setAttribute('animation__btnclick', {property:'position',from:'0 0.01 ' + (-0.15 * 4),to:'0 0 ' + (-0.15 * 4),dur:200,startEvents:'click'});
