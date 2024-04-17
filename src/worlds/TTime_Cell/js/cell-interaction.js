@@ -105,6 +105,7 @@ AFRAME.registerComponent('cell-interaction', {
                 numBtn.setAttribute('scale', {x:30, y:30, z:30});
                 //numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
                 numBtn.setAttribute('position', {x:0,y:0,z:-0.15 * x});
+                numBtn.setAttribute('rotation', {x:180,y:0,z:0});
                 numBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
                 numBtn.setAttribute('animation__btnclick', {property:'position',from:'0 0.01 ' + (-0.15 * x),to:'0 0 ' + (-0.15 * x),dur:200,startEvents:'click'});
                 numBtn.addEventListener('click', function() {receiveInpt(0);});
@@ -120,6 +121,7 @@ AFRAME.registerComponent('cell-interaction', {
                     numBtn.setAttribute('scale', {x:30, y:30, z:30});
                     //numBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
                     numBtn.setAttribute('position', {x:-0.15 + (0.15 * y),y:0,z:-0.15 * x});
+                    numBtn.setAttribute('rotation', {x:180,y:0,z:0});
                     numBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
                     numBtn.setAttribute('animation__btnclick', {property:'position',from: (-0.15 + (0.15 * y)) + ' 0.01 ' + (-0.15 * x),to:(-0.15 + (0.15 * y)) + ' 0 ' + (-0.15 * x),dur:200,startEvents:'click'});
                     numBtn.addEventListener('click', function() {receiveInpt((x*3) + y + 1);});
@@ -137,6 +139,7 @@ AFRAME.registerComponent('cell-interaction', {
         //sendBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
         //sendBtn.setAttribute('material', {color:'red'});
         sendBtn.setAttribute('position', {x:0.15,y:0,z:-0.15 * 4});
+        sendBtn.setAttribute('rotation', {x:180,y:0,z:0});
         sendBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
         sendBtn.setAttribute('animation__btnclick', {property:'position',from:'0.15 0.01 ' + (-0.15 * 4),to:'0.15 0 ' + (-0.15 * 4),dur:200,startEvents:'click'});
 
@@ -147,6 +150,7 @@ AFRAME.registerComponent('cell-interaction', {
         //resetBtn.setAttribute('geometry', {primitive:'cylinder', radius:0.05, height:0.03});
         //.setAttribute('material', {color:'white'});
         resetBtn.setAttribute('position', {x:0,y:0,z:-0.15 * 4});
+        resetBtn.setAttribute('rotation', {x:180,y:0,z:0});
         resetBtn.setAttribute('circles-interactive-object', {type:'highlight', click_sound:'#btnPress_sfx'});
         resetBtn.setAttribute('animation__btnclick', {property:'position',from:'0 0.01 ' + (-0.15 * 4),to:'0 0 ' + (-0.15 * 4),dur:200,startEvents:'click'});
 
