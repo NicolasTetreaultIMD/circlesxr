@@ -14,6 +14,7 @@
   <a-scene circles_scene_properties>
     <a-assets>
       <a-asset-item id="IngeniumRotaryRoom-gltf" src="assets/TelegraphRoom_Puzzle_RotaryPhone.glb"></a-asset-item>
+      <a-asset-item id="navmesh_gltf" src="assets/TelegraphRoom_Puzzle_NavMesh.glb"></a-asset-item>
 
       <a-asset-item id="IngeniumRotaryMain-gltf" src="assets/mainrotarydialpiece.glb"></a-asset-item>
       <a-asset-item id="IngeniumRotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
@@ -55,7 +56,9 @@
       </a-entity>
     </a-entity>
 
-    <a-entity id = "rotaryRoom" gltf-model="#IngeniumRotaryRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+    <a-entity id = "rotaryRoom" gltf-model="#IngeniumRotaryRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+    </a-entity>
 
     <!-- LIGHTS ROW 1-->
     <a-entity rotation="0 90 0" position="-0.7 0 0.08894">
