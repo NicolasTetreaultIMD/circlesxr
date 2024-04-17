@@ -1,5 +1,6 @@
 AFRAME.registerComponent('number-lock', {
     schema: {
+        slotPos: {type:'float', default:0},
         nums: {type:'int', default:4},
         code: {type:'int', default:1234},
         stringCode: {type:'string', default:""},
@@ -30,7 +31,7 @@ AFRAME.registerComponent('number-lock', {
 
             numSlot.setAttribute('circles-interactive-object', {type:'highlight'});
             numSlot.setAttribute('class', 'interactive');
-            numSlot.setAttribute('position',{x:(CONTEXT_AF.slotWidth * i) + (CONTEXT_AF.slotWidth/2) - (CONTEXT_AF.objWidth/2),y:0,z:CONTEXT_AF.objDepth / 2});
+            numSlot.setAttribute('position',{x:(CONTEXT_AF.slotWidth * i) + (CONTEXT_AF.slotWidth/2) - (CONTEXT_AF.objWidth/2),y:0,z:CONTEXT_AF.data.slotPos});
             //numSlot.setAttribute('geometry', {primitive:'box', width:CONTEXT_AF.slotWidth * (4/5), height:CONTEXT_AF.objHeight * (4/5), depth:CONTEXT_AF.objHeight * (4/5)});
             //gltf-model="#navmesh_gltf"
             numSlot.setAttribute('gltf-model', '#numlock_model');
@@ -48,12 +49,12 @@ AFRAME.registerComponent('number-lock', {
             let slotChars = []
 
             if (CONTEXT_AF.data.mode === "num" ) {
-                console.log("Num mode");
+                //console.log("Num mode");
 
                 slotChars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
             }
             else if (CONTEXT_AF.data.mode === "char") {
-                console.log("character mode");
+                //console.log("character mode");
 
                 slotChars = getSlotChars(CONTEXT_AF.data.stringCode.charAt(i), CONTEXT_AF.data.code.toString().charAt(i));
             }
@@ -63,7 +64,7 @@ AFRAME.registerComponent('number-lock', {
                 textContainer.setAttribute('rotation', {x:-(360/10) * j, y:0,z:0});
 
                 let text = document.createElement('a-entity');
-                text.setAttribute('position', {x:0,y:0,z:((CONTEXT_AF.slotWidth * (4/5)) / 2) - 0.1});
+                text.setAttribute('position', {x:0,y:0,z:0.399});
                 text.setAttribute('text', {width:CONTEXT_AF.data.textSize,value:slotChars[j],align:'center',color:'black'});
 
                 textContainer.appendChild(text);
@@ -76,8 +77,8 @@ AFRAME.registerComponent('number-lock', {
         }
 
         function getSlotChars(includeChar, codePos) {
-            console.log(includeChar);
-            console.log(codePos);
+            //console.log(includeChar);
+            //console.log(codePos);
             let possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             includeChar = includeChar.toUpperCase();
             let slotString = [];
@@ -99,7 +100,14 @@ AFRAME.registerComponent('number-lock', {
                 }
             }
 
-            console.log(slotString);
+            let passwordDisplay = document.querySelector("#passwordText");
+            if (passwordDisplay != null) {
+                for (let i = 0; i < CONTEXT_AF.data.nums; i++) {
+                    
+                }
+            }
+
+            //console.log(slotString);
             return slotString;
         }
 

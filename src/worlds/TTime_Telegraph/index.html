@@ -2,6 +2,9 @@
 <head>
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
+
+  <script src="js/telegraph-interaction.js"></script>
+  <script src="js/end-level.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -10,17 +13,116 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
-
+      
       <a-asset-item id="IngeniumTelegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
+      <a-asset-item id="IngeniumTelegraphRoom-gltf" src="assets/TelegraphRoom.glb"></a-asset-item>
+      
+      <img id="dotbtn_texture" src="assets/textures/dotBtn.png" crossorigin="anonymous">
+      <img id="dashbtn_texture" src="assets/textures/dashBtn.png" crossorigin="anonymous">
+      <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
+
+      <img id="Infographic1" src="assets/textures/EscapeRoom_Telegraph_Infographic1.png">
+      <img id="Infographic2" src="assets/textures/EscapeRoom_Telegraph_Infographic2.png"> 
+      <img id="Infographic3" src="assets/textures/EscapeRoom_Telegraph_Infographic3.png"> 
+      <img id="Infographic4" src="assets/textures/EscapeRoom_Telegraph_Infographic4.png">
+      
+      <!-- credit: "SOS-MorseCode" Pixabay - https://pixabay.com/sound-effects/sos-morsecode-31731/-->
+      <audio id="dot_sfx" src="assets/sounds/dit_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+      <audio id="dash_sfx" src="assets/sounds/dah_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
+      
+      <a-asset-item id="navmesh_gltf" src="assets/TelegraphRoom_NavMesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
 
-    <a-entity id = "telegraph" gltf-model="#IngeniumTelegraph-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+    <circles-manager-avatar/>
+
+    <a-entity id="poster1"
+                position="3.15 1.725 -1.35" rotation="0 0 0" scale="1.15 1.15 1.15"
+                shadow="receive:false; cast:false;"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic1; side:double;"></a-entity>
+
+    <a-entity id="poster2"
+                position="3.15 2 1.575" rotation="0 0 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 0 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic2; side:double;"></a-entity>
+
+    <a-entity id="poster3"
+                position="-2.25 1.875 -3.215" rotation="0 90 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 90 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic3; side:double;"></a-entity>
+
+    <a-entity id="poster4"
+                position="1.5 1.675 -3.215" rotation="0 90 0" scale="1 1 1"
+                shadow="receive:false; cast:false;"
+                circles-artefact="inspectScale:0.85 0.85 0.85; inspectRotation:0 90 0; inspectPosition:0 0.2 0;
+                                  origScale:1 1 1; origRotation:0 90 0;
+                                  label_offset:0 2.2 0; arrow_position:down;
+                                  title:''; 
+                                  description:'Samuel Morse, along with associate, Alfred Vail create new invention that will change the world!';
+                                  description_on: false;
+                                  label_text:The Future of Communication;
+                                  label_on:false;"
+                geometry="primitive:box; width:0.01; height:1.5;"
+                material="src:#Infographic4; side:double;"></a-entity>
+
+    <a-entity>
+      <a-entity geometry="primitive: cylinder" position="0 3.165 0" scale="0.35 0.05 0.35" material="color: #2e0f05"></a-entity>
+      <a-entity geometry="primitive: sphere" position="0 3.14595 0" scale="0.3 0.135 0.3" material="color: #febc86; emissive: #ff9500; emissiveIntensity: 2.3"></a-entity>
+      <a-entity geometry="primitive: sphere" position="0 3.03565 0" scale="0.05 0.05 0.05" material="color: #000000; emissive: #000000; emissiveIntensity: 2.3"></a-entity>
+      <a-entity geometry="primitive: sphere" position="0 3.02075 0" scale="0.025 0.05 0.025" material="color: #000000; emissive: #000000; emissiveIntensity: 2.3"></a-entity>
+    </a-entity>
+
+    <a-entity light="type: ambient; intensity: 3; color: fff1e5;"></a-entity>
+    <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #feb67c" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
+    <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #feb67c" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
+
+    <a-entity id = "telegraph" telegraph-interaction="angle:180; scale:0.3" gltf-model="#IngeniumTelegraph-gltf" position="0 1.055 0" scale="2.719 2.719 2.719" rotation="0 0 0"></a-entity>
+    <a-entity id = "telgraphroom" gltf-model="#IngeniumTelegraphRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+    </a-entity>
+
+    <a-entity id="RoomQuestion" position="-0.303 2.246 3.796" rotation="0 180 0" text="width:4;value:What are long presses called \n in morse code?;align:center;color:white"></a-entity>
+
+    <a-entity id="Hub-clear"
+                  position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
+                  circles-portal="img_src:assets/HubRoom_Preview.png; title_text:Return to Hub; link_url:/w/TTime_HubTel?group=explore"
+                  shadow end-level="curRoom:0"></a-entity>
+
+    <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -1.089"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="1.800 0.05 0.742"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="-2.515 0.05 1.913"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="-2.119 0.05 -1.235"></a-entity>
 
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
-    <circles-manager-avatar/>
   </a-scene>
 
   <!-- Circles' end scripts [REQUIRED] -->

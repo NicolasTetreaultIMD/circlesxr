@@ -1,0 +1,43 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+
+  <script src="js/rotary-interaction.js"></script>
+  <script src="js/end-level.js"></script>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+      
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <circles-manager-avatar/>
+
+    <a-entity rotary-interaction="enabled:true" position="0 1 -1">
+      <a-entity id="rotary-wheel" geometry="depth: 0.5; height: 0.5; width: 0.5"></a-entity>
+    </a-entity>
+
+    <!-- <a-entity id="Hub-clear"
+                  position="-2.729 -2 -1.752" rotation="0 0 0" scale="0.5 0.5 0.5"
+                  circles-portal="img_src:assets/HubRoom_Preview.png; title_text:Return to Hub; link_url:/w/TTime_HubTel?group=explore"
+                  shadow end-level="curRoom:1"></a-entity>
+
+    <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -1.089"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="1.800 0.05 0.742"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="-2.515 0.05 1.913"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="-2.119 0.05 -1.235"></a-entity> -->
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>

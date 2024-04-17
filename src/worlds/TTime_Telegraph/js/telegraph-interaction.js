@@ -15,6 +15,8 @@ const MorseDelay = {
 //Manages the telegraph interactions
 AFRAME.registerComponent('telegraph-interaction', {
     schema: {
+        angle:{type:'int', default:0},
+        scale:{type:'float', default:1},
     },
     init() {
         const CONTEXT_AF = this;
@@ -29,17 +31,21 @@ AFRAME.registerComponent('telegraph-interaction', {
         //Light element
         CONTEXT_AF.morseLight = document.createElement('a-entity');
         CONTEXT_AF.morseLight.setAttribute('id', 'morseLight');
-        CONTEXT_AF.morseLight.setAttribute('position', {x:0,y:0.58,z:0});
-        CONTEXT_AF.morseLight.setAttribute('geometry', {primitive:'cylinder', height:0.2, radius:0.1});
+        CONTEXT_AF.morseLight.setAttribute('position', {x:0.12,y:0,z:0.08});
+        CONTEXT_AF.morseLight.setAttribute('geometry', {primitive:'cylinder', height:0.3, radius:0.1});
+        CONTEXT_AF.morseLight.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
         CONTEXT_AF.morseLight.setAttribute('material', {color:'#316934', emissive:'#00ff00', emissiveIntensity:0});
 
         CONTEXT_AF.el.appendChild(CONTEXT_AF.morseLight);
 
         //Container for the other elements that need to be toggle off
+        console.log(CONTEXT_AF.data.scale);
 
         let telegraphElements = document.createElement('a-entity');
         telegraphElements.setAttribute('id', 'telegraphElements');
         telegraphElements.setAttribute('circles-interactive-visible', 'true');
+        telegraphElements.setAttribute('rotation', {x:0,y:CONTEXT_AF.data.angle,z:0});
+        telegraphElements.setAttribute('scale', {x:CONTEXT_AF.data.scale,y:CONTEXT_AF.data.scale,z:CONTEXT_AF.data.scale});
         
         CONTEXT_AF.telegraphElements = telegraphElements;
 
@@ -186,6 +192,9 @@ AFRAME.registerComponent('telegraph-interaction', {
         CONTEXT_AF.World1Name = "TTime_MissionControl";
         CONTEXT_AF.World2Name = "TTime_Telegraph";
 
+        CONTEXT_AF.Group1Name = "missionControl";
+        CONTEXT_AF.Group2Name = "timeTraveler";
+
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
@@ -232,10 +241,10 @@ AFRAME.registerComponent('telegraph-interaction', {
 
                     //Emit the message to users in the specified other world
                     if (CIRCLES.getCirclesWorldName() === CONTEXT_AF.World1Name) {
-                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World2Name});
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CONTEXT_AF.Group2Name, world:CONTEXT_AF.World2Name});
                     }
                     else {
-                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CIRCLES.getCirclesGroupName(), world:CONTEXT_AF.World1Name});
+                        CONTEXT_AF.socket.emit(CONTEXT_AF.EventName, {morseMessage:message, room:CONTEXT_AF.Group1Name, world:CONTEXT_AF.World1Name});
                     }
     
                     //Start playing the message
