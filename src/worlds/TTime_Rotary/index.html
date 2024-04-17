@@ -15,7 +15,8 @@
     <a-assets>
       <a-asset-item id="IngeniumRotaryRoom-gltf" src="assets/TelegraphRoom_Puzzle_RotaryPhone.glb"></a-asset-item>
 
-      <a-asset-item id="IngeniumRotary-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
+      <a-asset-item id="IngeniumRotaryMain-gltf" src="assets/mainrotarydialpiece.glb"></a-asset-item>
+      <a-asset-item id="IngeniumRotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
 
       <img id="Athens" src="assets/Athens-Greece.png">
       <img id="Beijing" src="assets/Beijing-China.png">
@@ -31,8 +32,6 @@
       <img id="News1" src="assets/4-Cities.png">
       <img id="News2" src="assets/Almon B. Strowger.png">
       <img id="News3" src="assets/Rotary Phone.png">
-      
-      <a-asset-item id="rotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
 
       <!-- Source: "Rotary Phone Pick Up and Slam Down" - https://pixabay.com/sound-effects/rotary-phone-pick-up-and-slam-down-37543/-->
       <audio id="pickup_sfx" src="assets/sounds/pickup_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -49,9 +48,10 @@
 
     <circles-manager-avatar/>
 
-    <a-entity rotary-interaction="enabled:true;offset:0.23;angledif:33;startangle:36;code:2819" position="0 1 -1">
-      <a-entity id="rotary-wheel">
-        <a-entity gltf-model="#rotaryDial-gltf" scale="30 30 30" rotation="-70 90 90"></a-entity>
+    <a-entity id="rotary-artefact" rotary-interaction="enabled:true;offset:0.23;angledif:33;startangle:36;code:2819" scale="0.382 0.382 0.382" position="2.557 1.336 -0.518" rotation="0 -78 0">
+      <a-entity gltf-model="#IngeniumRotaryMain-gltf" scale="30 30 30" rotation="0 180 0" position="-0.19 0 0"></a-entity>
+      <a-entity id="rotary-wheel" rotation="-50 0 0" position="0 0 0.305">
+        <a-entity gltf-model="#IngeniumRotaryDial-gltf" scale="30 30 30" rotation="-70 90 90"></a-entity>
       </a-entity>
     </a-entity>
 
@@ -160,40 +160,40 @@
     <a-entity position="-3.848 1.725 0.663" geometry="primitive: plane; height: 1.26; width: 1.75" material="src:#Stocks" rotation="0 90 0"></a-entity>
 
     <a-entity id="poster1Parent" position ="1.1 1.43 3.76" rotation="0 90 0">
-    <a-entity id="poster1"
-                position="0 0 0" rotation="0 0 0" scale="1 1 1"
-                shadow="receive:false; cast:false;"
-                circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
-                                  origScale:1 1 1; origRotation:0 0 0;
-                                  label_offset:0 2.2 0; arrow_position:down;
-                                  title:''; 
-                                  description:;
-                                  description_on: false;
-                                  label_text:The Future of Communication;
-                                  label_on:false;"
-                geometry="primitive:box; width:0.01; height:1.5;"
-                material="src:#News1; side:double;"></a-entity>
-                </a-entity>
+      <a-entity id="poster1"
+                  position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                  shadow="receive:false; cast:false;"
+                  circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                    origScale:1 1 1; origRotation:0 0 0;
+                                    label_offset:0 2.2 0; arrow_position:down;
+                                    title:''; 
+                                    description:;
+                                    description_on: false;
+                                    label_text:The Future of Communication;
+                                    label_on:false;"
+                  geometry="primitive:box; width:0.01; height:1.5;"
+                  material="src:#News1; side:double;"></a-entity>
+                  </a-entity>
 
     <a-entity id="poster2Parent" position ="-2.72 1.615 3.76" rotation="0 90 0">            
-    <a-entity id="poster2"
-                position="0 0 0" rotation="0 0 0" scale="1 1 1"
-                shadow="receive:false; cast:false;"
-                circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
-                                  origScale:1 1 1; origRotation:0 0 0;
-                                  label_offset:0 2.2 0; arrow_position:down;
-                                  title:''; 
-                                  description:;
-                                  description_on: false;
-                                  label_text:The Future of Communication;
-                                  label_on:false;"
-                geometry="primitive:box; width:0.01; height:1.5;"
-                material="src:#News2; side:double;"></a-entity>
-                </a-entity>
+      <a-entity id="poster2"
+                  position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                  shadow="receive:false; cast:false;"
+                  circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
+                                    origScale:1 1 1; origRotation:0 0 0;
+                                    label_offset:0 2.2 0; arrow_position:down;
+                                    title:''; 
+                                    description:;
+                                    description_on: false;
+                                    label_text:The Future of Communication;
+                                    label_on:false;"
+                  geometry="primitive:box; width:0.01; height:1.5;"
+                  material="src:#News2; side:double;"></a-entity>
+                  </a-entity>
 
-    <a-entity id="poster3Parent" position ="3.157 2.2 1.145" rotation="0 0 0">
+    <a-entity id="poster3Parent" position ="0 0 0" rotation="0 0 0">
     <a-entity id="poster3"
-                position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                position="3.157 2.2 1.145" rotation="0 0 0" scale="1 1 1"
                 shadow="receive:false; cast:false;"
                 circles-artefact="inspectScale:1.25 1.25 1.25; inspectRotation:0 90 0; inspectPosition:0 0 0.75;
                                   origScale:1 1 1; origRotation:0 0 0;
