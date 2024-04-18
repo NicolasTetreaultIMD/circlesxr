@@ -35,7 +35,7 @@
       <a-entity light="type: ambient; intensity: 3"></a-entity>
       <a-entity light="intensity: 3; castShadow: true; decay: 0.3; type: spot; color: #dcf6fe" position="-0.43992 12.10078 1.34728" rotation="-82.92131690030838 0 179.9998479605043" scale=""></a-entity>
       <a-entity light="intensity: 3; castShadow: true; type: spot; decay: 0.3; color: #dcf6fe" position="-0.1674 -7.53666 0" rotation="90 0 0" scale=""></a-entity>
-      
+
     <!-- LIGHTS SECTION 1-->
     <a-entity rotation="0 90 0" position="-1.5 1.5 0.8">
       <!-- ROW 1 -->
@@ -75,7 +75,7 @@
     <a-entity rotation="0 90 0" position="-1.5 1.5 -5">
       <!-- ROW 1 -->
       <a-entity geometry="primitive: cylinder" position="2 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
-      <a-entity geometry="primitive: circle" position="2 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>    
+      <a-entity geometry="primitive: circle" position="2 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
 
       <a-entity geometry="primitive: cylinder" position="5 3.767 -1.5" rotation="" scale="0.125 0.25 0.125" material="color: #454545"></a-entity>
       <a-entity geometry="primitive: circle" position="5 3.635 -1.5" rotation="90 90 0" scale="0.1 0.1 0.1" material="color: #ffd500; emissive: #ffffff; emissiveIntensity: 100"></a-entity>
@@ -111,25 +111,35 @@
 
     <a-entity id="telegraph"
     position="3.09577 -20.98801 -4.08334" rotation="0 -61.790633415883626 0" scale="2.719 2.719 2.719"
-    gltf-model="assets/telegraph.glb" 
+    gltf-model="assets/telegraph.glb"
     shadow="receive:false; cast:false;"
     circles-artefact="inspectScale:8 8 8; inspectRotation:0 0 0; inspectPosition:0 0 0;
                       origScale:2.719 2.719 2.719; origRotation:0 0 0;
                       label_offset:0 0.5 0; arrow_position:down;
                       textRotationY:270;
-                      title:The Telegraph - 1844; 
+                      title:The Telegraph - 1844;
                       description:The Telegraph is used to send messages over long distances, using wires that carries electrical signals. These signals are encoded and decoded in a specialized cipher called Morse Code;
                       description_on: true;
                       label_text:The Telegraph;
                       label_on: true;"></a-entity>
 
+    <a-entity id="rotary-artefact" scale="0.2 0.2 0.2" position="3.155 1.086 -2.592" rotation="0 -90 0" geometry="primitive: box" material="opacity: 0"
+    circles-artefact="inspectScale:1 1 1; inspectRotation:0 0 0; inspectPosition:0 0 -0.5;
+                      origScale:0.2 0.2 0.2; origRotation:0 -90 0;
+                      label_offset:0 0.5 0; arrow_position:down;
+                      textRotationY:270;
+                      title:The Rotary Dial - 1960s;
+                      description:The Rotary Dial is a early telecommunication devices that relies on a circular dial to input phone numbers, which generates electrical signals to connect calls through the telephone network.;
+                      description_on: true;
+                      label_text:The Rotary Dial;
+                      label_on: true;">
 
-    <a-entity id="rotary-artefact" scale="0.2 0.2 0.2" position="3.155 1.086 -2.592" rotation="0 -90 0">
       <a-entity gltf-model="#IngeniumRotaryMain-gltf" scale="30 30 30" rotation="0 180 0" position="-0.19 0 0"></a-entity>
       <a-entity id="rotary-wheel" rotation="-50 0 0" position="0 0 0.305">
         <a-entity gltf-model="#IngeniumRotaryDial-gltf" scale="30 30 30" rotation="-70 90 90"></a-entity>
       </a-entity>
     </a-entity>
+                  
 
       <a-entity id="TimeTraveler-Group"
                   position="-4.31 1.18 -0.222" rotation="0 0 0"
@@ -137,11 +147,10 @@
                   circles-portal="img_src:assets/TTime_Telegraph_Preview.png; title_text:Time Traveler Group; link_url:/w/TTime_Telegraph?group=timeTraveler&hub_state=000"
                   shadow></a-entity>
 
-      <a-entity id="MissionControl-Group"
-                  position="-4.31 1.18 -4.75" rotation="0 0 0"
-                  circles-portal="img_src:assets/MissionControlRoom_Preview.png; title_text:Mission Control Group; link_url:/w/TTime_MissionControl?group=missionControl&artefact=rotary&hub_state=000"
-                  shadow></a-entity>
-
+    <a-entity id="MissionControl-Group"
+                position="-4.31 1.18 -4.75" rotation="0 0 0"
+                circles-portal="img_src:assets/MissionControlRoom_Preview.png; title_text:Mission Control Group; link_url:/w/TTime_MissionControl?group=missionControl&artefact=rotary&hub_state=000"
+                shadow></a-entity>
 
       <a-entity circles-checkpoint position="1.860 0.05 -2.580"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="0.610 0.05 -8.228"></a-entity>
