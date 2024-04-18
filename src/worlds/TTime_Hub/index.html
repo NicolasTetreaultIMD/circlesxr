@@ -18,6 +18,8 @@
       <a-asset-item id="IngeniumRotaryMain-gltf" src="assets/mainrotarydialpiece.glb"></a-asset-item>
       <a-asset-item id="IngeniumRotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
 
+      <a-asset-item id="cell-gltf" src="assets/maincellphone.glb"></a-asset-item>
+
       <!-- Source: "Minimal Pop Click UI 8" - https://pixabay.com/sound-effects/minimal-pop-click-ui-8-198308/-->
       <audio id="btnPress_sfx" src="assets/sounds/btnPress_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
 
@@ -139,7 +141,33 @@
         <a-entity gltf-model="#IngeniumRotaryDial-gltf" scale="30 30 30" rotation="-70 90 90"></a-entity>
       </a-entity>
     </a-entity>
-                  
+
+    <a-entity id="cellphone-artefact" scale="0.1 0.1 0.1" position="3.155 1.086 -1.041" rotation="-0.817 -1.691 19.652" geometry="primitive: box" material="opacity: 0"
+    circles-artefact="inspectScale:0.25 0.25 0.25; inspectRotation:-2.16 94.91 79.038; inspectPosition:0 0 0.25;
+                      origScale:0.1 0.1 0.1; origRotation:0.817 -1.691 19.652;
+                      label_offset:0 0.5 0; arrow_position:down;
+                      textRotationY:270;
+                      title:The MicroTAC - 1990s;
+                      description:The Motorola MicroTac is a flip phone that utilized early analog cellular technology. It operated by transmitting and rceiving signals through radio frequencies to connect calls and send messages;
+                      description_on: true;
+                      label_text:The Cell Phone;
+                      label_on: true;">
+                      <a-entity id="cellphone-artefact" position="0 0 0" rotation="-0.817 -1.691 19.652" scale="100 100 100" gltf-model="#cell-gltf"></a-entity>
+                    </a-entity>
+
+    <!-- <a-entity id="cellphone-artefact" position="3.192 1.023 -1.059" rotation="-0.817 -1.691 19.652" scale="10 10 10"
+    gltf-model="#cell-gltf"
+    shadow="receive:false; cast:false;"
+    circles-artefact="inspectScale:15 15 15; inspectRotation:0 80 90; inspectPosition:0 0 1;
+                      origScale:10 10 10; origRotation:0 0 0;
+                      label_offset:0 0.5 0; arrow_position:down;
+                      textRotationY:270;
+                      title:The MicroTAC - 1990s;
+                      description:The Motorola MicroTac is a flip phone that utilized early analog cellular technology. It operated by transmitting and rceiving signals through radio frequencies to connect calls and send messages;
+                      description_on: true;
+                      label_text:The Cell Phone;
+                      label_on: true;"></a-entity> -->
+
 
       <a-entity id="TimeTraveler-Group"
                   position="-4.31 1.18 -0.222" rotation="0 0 0"
