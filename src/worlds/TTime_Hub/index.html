@@ -11,6 +11,17 @@
   <a-scene circles_scene_properties>
     <a-assets>
 
+      <a-asset-item id="cellBtn0-gltf" src="assets/cellphone/space0_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn1-gltf" src="assets/cellphone/blank1_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn2-gltf" src="assets/cellphone/abc2_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn3-gltf" src="assets/cellphone/def3_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn4-gltf" src="assets/cellphone/ghi4_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn5-gltf" src="assets/cellphone/jkl5_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn6-gltf" src="assets/cellphone/mno6_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn7-gltf" src="assets/cellphone/pqrs7_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn8-gltf" src="assets/cellphone/tuv8_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn9-gltf" src="assets/cellphone/wxyz9_button.glb"></a-asset-item>
+
       <a-asset-item id="telegraph-gltf" src="assets/telegraph.glb"></a-asset-item>
       <a-asset-item id="IngeniumLab-gltf" src="assets/Ingenium_Lab.glb"></a-asset-item>
       <a-asset-item id="button-gltf" src="assets/Button.glb"></a-asset-item>
@@ -125,7 +136,7 @@
                       label_text:The Telegraph;
                       label_on: true;"></a-entity>
 
-    <a-entity id="rotary-artefact" scale="0.2 0.2 0.2" position="3.155 1.086 -2.592" rotation="0 -90 0" geometry="primitive: box" material="opacity: 0"
+    <a-entity id="rotary-artefact" scale="0.2 0.2 0.2" position="3.155 -61.086 -2.592" rotation="0 -90 0" geometry="primitive: box" material="opacity: 0"
     circles-artefact="inspectScale:1 1 1; inspectRotation:0 0 0; inspectPosition:0 0 -0.5;
                       origScale:0.2 0.2 0.2; origRotation:0 -90 0;
                       label_offset:0 0.5 0; arrow_position:down;
@@ -142,7 +153,7 @@
       </a-entity>
     </a-entity>
 
-    <a-entity id="cellphone-artefact" scale="0.1 0.1 0.1" position="3.155 1.086 -1.041" rotation="-0.817 -1.691 19.652" geometry="primitive: box" material="opacity: 0"
+    <a-entity id="cellphone-artefact" scale="0.1 0.1 0.1" position="3.155 -61.086 -1.041" rotation="-0.817 -1.691 19.652" geometry="primitive: box" material="opacity: 0"
     circles-artefact="inspectScale:0.25 0.25 0.25; inspectRotation:-2.16 94.91 79.038; inspectPosition:0 0 0.25;
                       origScale:0.1 0.1 0.1; origRotation:0.817 -1.691 19.652;
                       label_offset:0 0.5 0; arrow_position:down;
@@ -152,7 +163,7 @@
                       description_on: true;
                       label_text:The Cell Phone;
                       label_on: true;">
-                      <a-entity id="cellphone-artefact" position="0 0 0" rotation="-0.817 -1.691 19.652" scale="100 100 100" gltf-model="#cell-gltf"></a-entity>
+                      <a-entity id="cellphone-artefact" position="0 0 0" rotation="-0.817 -1.691 19.652" scale="100 100 100" gltf-model="#cell-gltf"></a-entity>   
                     </a-entity>
 
     <!-- <a-entity id="cellphone-artefact" position="3.192 1.023 -1.059" rotation="-0.817 -1.691 19.652" scale="10 10 10"
@@ -214,9 +225,11 @@
     }
     if (Math.floor((hubState % 100) / 10) == 1) {
       console.log('load rotary artefact');
+      document.querySelector('#rotary-artefact').setAttribute('position', {x:3.155, y:1.086, z:-2.592});
     }
     if (Math.floor(hubState / 100) == 1) {
       console.log('load cell artefact');
+      document.querySelector('#cellphone-artefact').setAttribute('position', {x:3.155, y:1.086, z:-1.041});
     }
   }
 

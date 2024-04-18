@@ -69,16 +69,16 @@ AFRAME.registerComponent('cell-interaction', {
 
         let cellDisplayScreen = document.createElement('a-entity');
         cellDisplayScreen.setAttribute('id', 'cellDisplayScreenCont');
-        cellDisplayScreen.setAttribute('position', {x:0,y:-0.61,z:0.6});
+        cellDisplayScreen.setAttribute('position', {x:0,y:-0.61,z:0.560});
         cellDisplayScreen.setAttribute('rotation', {x:90, y:0, z:0});
 
         let senderText = document.createElement('a-entity');
-        senderText.setAttribute('position', {x:-0.391, y:-0.008, z:0.037});
-        senderText.setAttribute('text', {align: 'right', value: '', color:'blue'});
+        senderText.setAttribute('position', {x:-0.172, y:-0.047, z:0.039});
+        senderText.setAttribute('text', {align: 'right', value: '', color:'blue', width:0.5});
 
         let receiverText = document.createElement('a-entity');
-        receiverText.setAttribute('position', {x:0.391, y:-0.008, z:0.037});
-        receiverText.setAttribute('text', {align: 'left', value: '', color:'green'});
+        receiverText.setAttribute('position', {x:0.172, y:-0.047, z:0.039});
+        receiverText.setAttribute('text', {align: 'left', value: '', color:'green', width:0.5});
 
         cellDisplayScreen.appendChild(senderText);
         cellDisplayScreen.appendChild(receiverText);
