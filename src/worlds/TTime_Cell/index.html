@@ -16,6 +16,7 @@
       <a-asset-item id="IngeniumCellRoom-gltf" src="assets/TelegraphRoom_Puzzle_CellPhone.glb"></a-asset-item>
       <a-asset-item id="navmesh_gltf" src="assets/TelegraphRoom_Puzzle_CellPhone_NavMesh.glb"></a-asset-item>
 
+      <a-asset-item id="cell-gltf" src="assets/cellphone/maincellphone.glb"></a-asset-item>
       <a-asset-item id="cellBtn0-gltf" src="assets/cellphone/space0_button.glb"></a-asset-item>
       <a-asset-item id="cellBtn1-gltf" src="assets/cellphone/blank1_button.glb"></a-asset-item>
       <a-asset-item id="cellBtn2-gltf" src="assets/cellphone/abc2_button.glb"></a-asset-item>
@@ -46,7 +47,10 @@
 
     <circles-manager-avatar/>
 
-    <a-entity cell-interaction="" position="0 1 -1" geometry="depth: 0.5; height: 0.5; width: 0.5"></a-entity>
+    <a-entity cell-interaction="" position="-0.26 0.895 -2.865" rotation="-39 0 0" scale="0.425 0.425 0.425" circles-artefact="label_on:false;description_on:false;inspectPosition:0.0 -0.4 0.0;" geometry="primitive:box;depth:1.450;height:1.880" material="opacity:0">
+      <a-entity gltf-model="#cell-gltf" scale="30 30 30" position="0 0.441 0.508" rotation="0 90 90"></a-entity>
+    </a-entity>
+    
     <a-entity id = "cellRoom" gltf-model="#IngeniumCellRoom-gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
       <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
     </a-entity>

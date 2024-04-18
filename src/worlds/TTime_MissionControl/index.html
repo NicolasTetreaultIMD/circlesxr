@@ -3,6 +3,7 @@
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
 
+  <script src="js/cell-interaction.js"></script>
   <script src="js/telegraph-interaction.js"></script>
   <script src="js/rotary-interaction.js"></script>
   <script src="js/number-lock.js"></script>
@@ -16,6 +17,21 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
+
+      <a-asset-item id="cell-gltf" src="assets/cellphone/maincellphone.glb"></a-asset-item>
+      <a-asset-item id="cellBtn0-gltf" src="assets/cellphone/space0_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn1-gltf" src="assets/cellphone/blank1_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn2-gltf" src="assets/cellphone/abc2_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn3-gltf" src="assets/cellphone/def3_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn4-gltf" src="assets/cellphone/ghi4_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn5-gltf" src="assets/cellphone/jkl5_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn6-gltf" src="assets/cellphone/mno6_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn7-gltf" src="assets/cellphone/pqrs7_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn8-gltf" src="assets/cellphone/tuv8_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtn9-gltf" src="assets/cellphone/wxyz9_button.glb"></a-asset-item>
+
+      <a-asset-item id="cellBtnSND-gltf" src="assets/cellphone/SND_button.glb"></a-asset-item>
+      <a-asset-item id="cellBtnCLR-gltf" src="assets/cellphone/CLR_button.glb"></a-asset-item>
 
       <a-asset-item id="IngeniumRotaryMain-gltf" src="assets/mainrotarydialpiece.glb"></a-asset-item>
       <a-asset-item id="IngeniumRotaryDial-gltf" src="assets/rotaryphonedialpiece.glb"></a-asset-item>
@@ -35,6 +51,9 @@
       <img id="dashbtn_texture" src="assets/textures/dashBtn.png" crossorigin="anonymous">
       <img id="spacebtn_texture" src="assets/textures/spaceBtn.png" crossorigin="anonymous">
       <img id="morseCode" src="assets/textures/morseCode.jpg">
+
+      <!-- Source: "Ping" - https://pixabay.com/sound-effects/ping-82822/-->
+      <audio id="textNotif_sfx" src="assets/sounds/textNotif_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
 
       <!-- Source: "Rotary Phone Pick Up and Slam Down" - https://pixabay.com/sound-effects/rotary-phone-pick-up-and-slam-down-37543/-->
       <audio id="pickup_sfx" src="assets/sounds/pickup_sfx.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -146,7 +165,9 @@
     </a-entity>
 
     <a-entity id="cell-container" circles-interactive-visible="false">
-
+      <a-entity cell-interaction position="0.883 0.487 3.380" rotation="-39 180 0" scale="0.425 0.425 0.425" circles-artefact="label_on:false;description_on:false;inspectPosition:0.0 -0.4 0.0;" geometry="primitive:box;depth:1.450;height:1.880" material="opacity:0">
+        <a-entity gltf-model="#cell-gltf" scale="30 30 30" position="0 0.441 0.508" rotation="0 90 90"></a-entity>
+      </a-entity>
     </a-entity>
 
     <!-- <a-entity id="passwordText" position="-0.303 1.181 3.693" rotation="0 180 0" text="width:4;align:center;color:white;letterSpacing:30"></a-entity> -->

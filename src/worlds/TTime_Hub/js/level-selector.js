@@ -25,7 +25,7 @@ function UpdatePortals() {
         case Artefacts.cell:
             document.querySelector('#currentArtefactTxt').setAttribute('text', {value:'Currently Targeted Artefact:\n\n Cell Phone'});
 
-            document.querySelector('#TimeTraveler-Group').setAttribute('circles-portal', {link_url:"/w/TTime_Cell?group=timeTraveler&hub_state=" + hubStateStr});
+            document.querySelector('#TimeTraveler-Group').setAttribute('circles-portal', {img_src:'assets/TTime_Cell_Preview.png', link_url:"/w/TTime_Cell?group=timeTraveler&hub_state=" + hubStateStr});
             document.querySelector('#MissionControl-Group').setAttribute('circles-portal', {link_url:"/w/TTime_MissionControl?group=missionControl&artefact=cell&hub_state=" + hubStateStr});
             break;
     }
